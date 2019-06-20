@@ -685,7 +685,7 @@ public:
 	virtual void DoInit() override;
 	virtual void SetEnabled(bool bEnable = true) override;
 	virtual CSize EstimateSize(CSize szAvailable) override;
-	virtual void SetPos(UiRect rc) override;
+	virtual void SetPos(CRect rc) override;
 	virtual void HandleMessage(EventArgs& event) override;
 	void OnSetCursor(EventArgs& event);
 	void OnSetFocus(EventArgs& event);
@@ -696,8 +696,8 @@ public:
 	void OnImeEndComposition(EventArgs& event);
 	void OnMouseMessage(UINT uMsg, EventArgs& event);
 
-	virtual void Paint(IRenderContext* pRender, const UiRect& rcPaint) override;
-	virtual void PaintChild(IRenderContext* pRender, const UiRect& rcPaint) override;
+	virtual void Paint(IRenderContext* pRender, const CRect& rcPaint) override;
+	virtual void PaintChild(IRenderContext* pRender, const CRect& rcPaint) override;
 	virtual void SetAttribute(const std::wstring& pstrName, const std::wstring& pstrValue) override;
 
 	/**
@@ -754,7 +754,7 @@ public:
 	 * @param[in] rcPaint 绘制位置
 	 * @return 无
 	 */
-	void PaintCaret(IRenderContext* pRender, const UiRect& rcPaint);
+	void PaintCaret(IRenderContext* pRender, const CRect& rcPaint);
 
 	/**
 	 * @brief 设置是否显示提示文字

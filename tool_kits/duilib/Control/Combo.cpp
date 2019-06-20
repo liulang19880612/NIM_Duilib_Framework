@@ -27,8 +27,8 @@ void CComboWnd::Init(Combo* pOwner)
 
     // Position the popup window in absolute space
     CSize szDrop = m_pOwner->GetDropBoxSize();
-    UiRect rcOwner = pOwner->GetPosWithScrollOffset();
-    UiRect rc = rcOwner;
+    CRect rcOwner = pOwner->GetPosWithScrollOffset();
+    CRect rc = rcOwner;
     rc.top = rc.bottom + 1;		// 父窗口left、bottom位置作为弹出窗口起点
     rc.bottom = rc.top + szDrop.cy;	// 计算弹出窗口高度
     if( szDrop.cx > 0 ) rc.right = rc.left + szDrop.cx;	// 计算弹出窗口宽度
@@ -49,7 +49,7 @@ void CComboWnd::Init(Combo* pOwner)
     MONITORINFO oMonitor = {};
     oMonitor.cbSize = sizeof(oMonitor);
     ::GetMonitorInfo(::MonitorFromWindow(GetHWND(), MONITOR_DEFAULTTOPRIMARY), &oMonitor);
-    UiRect rcWork = oMonitor.rcWork;
+    CRect rcWork = oMonitor.rcWork;
     if( rc.bottom > rcWork.bottom || m_pOwner->IsPopupTop()) {
         rc.left = rcOwner.left;
         rc.right = rcOwner.right;
@@ -143,10 +143,10 @@ Combo::Combo() :
 	// reassigned by this operation - which is why it is important to reassign
 	// the items back to the righfull owner/manager when the window closes.
 	m_pLayout.reset(new ListBox(new VLayout));
-	m_pLayout->GetLayout()->SetPadding(UiRect(1, 1, 1, 1));
+	m_pLayout->GetLayout()->SetPadding(CRect(1, 1, 1, 1));
 	m_pLayout->SetBkColor(L"bk_wnd_lightcolor");
 	m_pLayout->SetBorderColor(L"combobox_border");
-	m_pLayout->SetBorderSize(UiRect(1, 1, 1, 1));
+	m_pLayout->SetBorderSize(CRect(1, 1, 1, 1));
 	m_pLayout->SetAutoDestroy(false);
 	m_pLayout->EnableScrollBar();
 	m_pLayout->ApplyAttributeList(GetDropBoxAttributeList());
@@ -212,12 +212,12 @@ void Combo::SetAttribute(const std::wstring& strName, const std::wstring& strVal
 
 void Combo::PaintText(IRenderContext* pRender)
 {
-	UiRect rcText = m_rcItem;
+	CRect rcText = m_rcItem;
 
 	if (m_iCurSel >= 0) {
 		Control* pControl = static_cast<Control*>((m_pLayout->GetItemAt(m_iCurSel)));
 		ListContainerElement* pElement = dynamic_cast<ListContainerElement*>(pControl);
-		UiRect rcTextPadding = pElement->GetTextPadding();
+		CRect rcTextPadding = pElement->GetTextPadding();
 		rcText.left += rcTextPadding.left;
 		rcText.right -= rcTextPadding.right;
 		rcText.top += rcTextPadding.top;
@@ -236,7 +236,7 @@ void Combo::PaintText(IRenderContext* pRender)
 				pElement->GetFont(), DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS);
 		}
 		else {
-			UiRect rcOldPos = pControl->GetPos();
+			CRect rcOldPos = pControl->GetPos();
 			pControl->SetPos(rcText);
 			pControl->AlphaPaint(pRender, rcText);
 			pControl->SetPos(rcOldPos);

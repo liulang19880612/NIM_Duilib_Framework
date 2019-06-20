@@ -15,7 +15,7 @@ void Layout::SetOwner(Box* pOwner)
 	m_pOwner = pOwner;
 }
 
-CSize Layout::SetFloatPos(Control* pControl, UiRect rcContainer)
+CSize Layout::SetFloatPos(Control* pControl, CRect rcContainer)
 {
 	if (!pControl->IsVisible()) return CSize();
 
@@ -23,7 +23,7 @@ CSize Layout::SetFloatPos(Control* pControl, UiRect rcContainer)
 	int childRight = 0;
 	int childTop = 0;
 	int childBottm = 0;
-	UiRect rcMargin = pControl->GetMargin();
+	CRect rcMargin = pControl->GetMargin();
 	int iPosLeft = rcContainer.left + rcMargin.left;
 	int iPosRight = rcContainer.right - rcMargin.right;
 	int iPosTop = rcContainer.top + rcMargin.top;
@@ -83,7 +83,7 @@ CSize Layout::SetFloatPos(Control* pControl, UiRect rcContainer)
 		childBottm = childTop + childHeight;
 	}
 
-	UiRect childPos(childLeft, childTop, childRight, childBottm);
+	CRect childPos(childLeft, childTop, childRight, childBottm);
 	pControl->SetPos(childPos);
 	return CSize(childPos.GetWidth(), childPos.GetHeight());
 }
@@ -92,7 +92,7 @@ bool Layout::SetAttribute(const std::wstring& strName, const std::wstring& strVa
 {
 	bool hasAttribute = true;
 	if( strName == _T("padding") ) {
-		UiRect rcPadding;
+		CRect rcPadding;
 		LPTSTR pstr = NULL;
 		rcPadding.left = _tcstol(strValue.c_str(), &pstr, 10);  ASSERT(pstr);    
 		rcPadding.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
@@ -110,7 +110,7 @@ bool Layout::SetAttribute(const std::wstring& strName, const std::wstring& strVa
 	return hasAttribute;
 }
 
-CSize Layout::ArrangeChild(const std::vector<Control*>& items, UiRect rc)
+CSize Layout::ArrangeChild(const std::vector<Control*>& items, CRect rc)
 {
 	CSize size;
 	for (auto it = items.begin(); it != items.end(); it++) 
@@ -147,12 +147,12 @@ CSize Layout::AjustSizeByChild(const std::vector<Control*>& items, CSize szAvail
 	return maxSize;
 }
 
-UiRect Layout::GetPadding() const
+CRect Layout::GetPadding() const
 {
 	return m_rcPadding;
 }
 
-void Layout::SetPadding(UiRect rcPadding, bool bNeedDpiScale /*= true*/)
+void Layout::SetPadding(CRect rcPadding, bool bNeedDpiScale /*= true*/)
 {
 	if (bNeedDpiScale)
 		DpiManager::GetInstance()->ScaleRect(rcPadding);
@@ -173,9 +173,9 @@ void Layout::SetChildMargin(int iMargin)
 	m_pOwner->Arrange();
 }
 
-UiRect Layout::GetInternalPos() const
+CRect Layout::GetInternalPos() const
 {
-	UiRect internalPos = m_pOwner->GetPos();
+	CRect internalPos = m_pOwner->GetPos();
 	internalPos.Deflate(m_rcPadding);
 	return internalPos;
 }
@@ -231,7 +231,7 @@ void Box::SetAttribute(const std::wstring& strName, const std::wstring& strValue
 	else Control::SetAttribute(strName, strValue);
 }
 
-void Box::SetPos(UiRect rc)
+void Box::SetPos(CRect rc)
 {
 	Control::SetPos(rc);
 	rc.left += m_pLayout->GetPadding().left;
@@ -334,9 +334,9 @@ void Box::HandleMessageTemplate(EventArgs& msg)
 	}
 }
 
-void Box::PaintChild(IRenderContext* pRender, const UiRect& rcPaint)
+void Box::PaintChild(IRenderContext* pRender, const CRect& rcPaint)
 {
-	UiRect rcTemp;
+	CRect rcTemp;
 	if( !::IntersectRect(&rcTemp, &rcPaint, &m_rcItem) ) return;
 
 	for (auto it = m_items.begin(); it != m_items.end(); it++) {
@@ -438,7 +438,7 @@ Control* Box::FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags, CPoin
 		Control* pControl = Control::FindControl(Proc, pData, uFlags);
 		if (pControl != NULL) return pControl;
 	}
-	UiRect rc = m_rcItem;
+	CRect rc = m_rcItem;
 	rc.left += m_pLayout->GetPadding().left;
 	rc.top += m_pLayout->GetPadding().top;
 	rc.right -= m_pLayout->GetPadding().right;
@@ -699,10 +699,10 @@ void Box::RetSetLayout(Layout* pLayout)
 	m_pLayout.reset(pLayout);
 }
 
-UiRect Box::GetPaddingPos() const
+CRect Box::GetPaddingPos() const
 {
-	UiRect pos = GetPos();
-	UiRect padding = m_pLayout->GetPadding();
+	CRect pos = GetPos();
+	CRect padding = m_pLayout->GetPadding();
 	pos.left += padding.left;
 	pos.top += padding.top;
 	pos.right -= padding.right;
@@ -793,7 +793,7 @@ void ScrollableBox::SetAttribute(const std::wstring& pstrName, const std::wstrin
 		if( GetHorizontalScrollBar() ) GetHorizontalScrollBar()->ApplyAttributeList(pstrValue);
 	}
 	else if( pstrName == _T("scrollbarpadding") ) {
-		UiRect rcScrollbarPadding;
+		CRect rcScrollbarPadding;
 		LPTSTR pstr = NULL;
 		rcScrollbarPadding.left = _tcstol(pstrValue.c_str(), &pstr, 10);  ASSERT(pstr);    
 		rcScrollbarPadding.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
@@ -809,7 +809,7 @@ void ScrollableBox::SetAttribute(const std::wstring& pstrName, const std::wstrin
 	else Box::SetAttribute(pstrName, pstrValue);
 }
 
-void ScrollableBox::SetPos(UiRect rc)
+void ScrollableBox::SetPos(CRect rc)
 {
 	bool bEndDown = false;
 	if (IsHoldEnd() && IsVScrollBarValid() && GetScrollRange().cy - GetScrollPos().cy == 0) {
@@ -821,10 +821,10 @@ void ScrollableBox::SetPos(UiRect rc)
 	}
 }
 
-void ScrollableBox::SetPosInternally(UiRect rc)
+void ScrollableBox::SetPosInternally(CRect rc)
 {
 	Control::SetPos(rc);
-	UiRect rcRaw = rc;
+	CRect rcRaw = rc;
 	rc.left += m_pLayout->GetPadding().left;
 	rc.top += m_pLayout->GetPadding().top;
 	rc.right -= m_pLayout->GetPadding().right;
@@ -834,7 +834,7 @@ void ScrollableBox::SetPosInternally(UiRect rc)
 	ProcessVScrollBar(rcRaw, requiredSize.cy);
 	ProcessHScrollBar(rcRaw, requiredSize.cx);
 }
-CSize ScrollableBox::CalcRequiredSize(const UiRect& rc)
+CSize ScrollableBox::CalcRequiredSize(const CRect& rc)
 {
 	CSize requiredSize;
 	if (m_items.size() == 0) {
@@ -842,7 +842,7 @@ CSize ScrollableBox::CalcRequiredSize(const UiRect& rc)
 		requiredSize.cy = 0;
 	}
 	else {
-		UiRect childSize = rc;
+		CRect childSize = rc;
 		if (!m_bScrollBarFloat && m_pVerticalScrollBar && m_pVerticalScrollBar->IsValid()) {
 			childSize.right -= m_pVerticalScrollBar->GetFixedWidth();
 		}
@@ -1002,9 +1002,9 @@ bool ScrollableBox::MouseLeave(EventArgs& msg)
 	return bRet;
 }
 
-void ScrollableBox::PaintChild(IRenderContext* pRender, const UiRect& rcPaint)
+void ScrollableBox::PaintChild(IRenderContext* pRender, const CRect& rcPaint)
 {
-	UiRect rcTemp;
+	CRect rcTemp;
 	if( !::IntersectRect(&rcTemp, &rcPaint, &m_rcItem) ) return;
 
 	for (auto it = m_items.begin(); it != m_items.end(); it++) {
@@ -1015,7 +1015,7 @@ void ScrollableBox::PaintChild(IRenderContext* pRender, const UiRect& rcPaint)
 		}
 		else {
 			CSize scrollPos = GetScrollPos();
-			UiRect rcNewPaint = rcPaint;
+			CRect rcNewPaint = rcPaint;
 			rcNewPaint.Offset(scrollPos.cx, scrollPos.cy);
 			rcNewPaint.Offset(GetRenderOffset().x, GetRenderOffset().y);
 
@@ -1136,12 +1136,12 @@ void ScrollableBox::LoadImageCache(bool bFromTopLeft)
 	auto forEach = [this, scrollPos](ui::Control* pControl) {
 		if (!pControl->IsVisible()) return;
 		if (pControl->IsFloat()) return;
-		UiRect rcTemp;
-		UiRect rcImageCachePos = GetPos();
+		CRect rcTemp;
+		CRect rcImageCachePos = GetPos();
 		rcImageCachePos.Offset(scrollPos.cx, scrollPos.cy);
 		rcImageCachePos.Offset(GetRenderOffset().x, GetRenderOffset().y);
-		rcImageCachePos.Inflate(UiRect(0, 730, 0, 730));
-		UiRect controlPos = pControl->GetPos();
+		rcImageCachePos.Inflate(CRect(0, 730, 0, 730));
+		CRect controlPos = pControl->GetPos();
 		if (!::IntersectRect(&rcTemp, &rcImageCachePos, &controlPos)) {
 			pControl->UnLoadImageCache();
 		}
@@ -1476,9 +1476,9 @@ ScrollBar* ScrollableBox::GetHorizontalScrollBar() const
 	return m_pHorizontalScrollBar.get();
 }
 
-void ScrollableBox::ProcessVScrollBar(UiRect rc, int cyRequired)
+void ScrollableBox::ProcessVScrollBar(CRect rc, int cyRequired)
 {
-	UiRect rcScrollBarPos = rc;
+	CRect rcScrollBarPos = rc;
 	rcScrollBarPos.left += m_rcScrollBarPadding.left;
 	rcScrollBarPos.top += m_rcScrollBarPadding.top;
 	rcScrollBarPos.right -= m_rcScrollBarPadding.right;
@@ -1511,7 +1511,7 @@ void ScrollableBox::ProcessVScrollBar(UiRect rc, int cyRequired)
 		SetPos(m_rcItem);
 	}
 	else {
-		UiRect rcVerScrollBarPos(rcScrollBarPos.right - m_pVerticalScrollBar->GetFixedWidth(), rcScrollBarPos.top, rcScrollBarPos.right, rcScrollBarPos.bottom);
+		CRect rcVerScrollBarPos(rcScrollBarPos.right - m_pVerticalScrollBar->GetFixedWidth(), rcScrollBarPos.top, rcScrollBarPos.right, rcScrollBarPos.bottom);
 		m_pVerticalScrollBar->SetPos(rcVerScrollBarPos);
 
 		if( m_pVerticalScrollBar->GetScrollRange() != cyScroll ) {
@@ -1528,9 +1528,9 @@ void ScrollableBox::ProcessVScrollBar(UiRect rc, int cyRequired)
 	}
 }
 
-void ScrollableBox::ProcessHScrollBar(UiRect rc, int cxRequired)
+void ScrollableBox::ProcessHScrollBar(CRect rc, int cxRequired)
 {
-	UiRect rcScrollBarPos = rc;
+	CRect rcScrollBarPos = rc;
 	rcScrollBarPos.left += m_rcScrollBarPadding.left;
 	rcScrollBarPos.top += m_rcScrollBarPadding.top;
 	rcScrollBarPos.right -= m_rcScrollBarPadding.right;
@@ -1563,7 +1563,7 @@ void ScrollableBox::ProcessHScrollBar(UiRect rc, int cxRequired)
 		SetPos(m_rcItem);
 	}
 	else {
-		UiRect rcVerScrollBarPos(rcScrollBarPos.left, rcScrollBarPos.bottom - m_pHorizontalScrollBar->GetFixedHeight(), rcScrollBarPos.right, rcScrollBarPos.bottom);
+		CRect rcVerScrollBarPos(rcScrollBarPos.left, rcScrollBarPos.bottom - m_pHorizontalScrollBar->GetFixedHeight(), rcScrollBarPos.right, rcScrollBarPos.bottom);
 		m_pHorizontalScrollBar->SetPos(rcVerScrollBarPos);
 
 		if (m_pHorizontalScrollBar->GetScrollRange() != cxScroll) {
@@ -1669,12 +1669,12 @@ void ScrollableBox::SetScrollBarFloat(bool bScrollBarFloat)
 	m_bScrollBarFloat = bScrollBarFloat;
 }
 
-ui::UiRect ScrollableBox::GetScrollBarPadding() const
+ui::CRect ScrollableBox::GetScrollBarPadding() const
 {
 	return m_rcScrollBarPadding;
 }
 
-void ScrollableBox::SetScrollBarPadding(UiRect rcScrollBarPadding)
+void ScrollableBox::SetScrollBarPadding(CRect rcScrollBarPadding)
 {
 	DpiManager::GetInstance()->ScaleRect(rcScrollBarPadding);
 	m_rcScrollBarPadding = rcScrollBarPadding;

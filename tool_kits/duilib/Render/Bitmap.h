@@ -23,8 +23,8 @@ public:
 	virtual int	GetWidth() override;
 	virtual int GetHeight() override;
 
-	virtual void ClearAlpha(const UiRect& rcDirty, int alpha) override;
-	virtual void RestoreAlpha(const UiRect& rcDirty, const UiRect& rcShadowPadding, int alpha) override;
+	virtual void ClearAlpha(const CRect& rcDirty, int alpha) override;
+	virtual void RestoreAlpha(const CRect& rcDirty, const CRect& rcShadowPadding, int alpha) override;
 private:
 	void CleanUp();
 

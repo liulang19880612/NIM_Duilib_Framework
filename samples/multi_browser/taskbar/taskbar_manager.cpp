@@ -256,10 +256,10 @@ HBITMAP TaskbarManager::GenerateBindControlBitmapWithForm(ui::Control *control)
 	render->BitBlt(0, 0, window_width, window_height, taskbar_delegate_->GetRenderDC());
 
 	// 3.把某个会话盒子的位图画到内存dc，覆盖原窗口对应位置的位图
-	UiRect rcPaint = control->GetPos();
+	CRect rcPaint = control->GetPos();
 	if (rcPaint.IsRectEmpty())
 		return NULL;
-	rcPaint.Intersect(UiRect(0, 0, window_width, window_height));
+	rcPaint.Intersect(CRect(0, 0, window_width, window_height));
 
 	// 这里不设置剪裁区域，就无法正常绘制
 	{
@@ -314,10 +314,10 @@ HBITMAP TaskbarManager::GenerateBindControlBitmap(ui::Control *control, const in
 	render->Resize(window_width, window_height);
 
 	// 2.把某个会话盒子的位图画到内存dc，覆盖原窗口对应位置的位图
-	UiRect rcPaint = control->GetPos();
+	CRect rcPaint = control->GetPos();
 	if (rcPaint.IsRectEmpty())
 		return NULL;
-	rcPaint.Intersect(UiRect(0, 0, window_width, window_height));
+	rcPaint.Intersect(CRect(0, 0, window_width, window_height));
 
 	// 这里不设置剪裁区域，就无法正常绘制
 	{
@@ -333,7 +333,7 @@ HBITMAP TaskbarManager::GenerateBindControlBitmap(ui::Control *control, const in
 	render->RestoreAlpha(rcPaint);
 
 	// 4.缩放到目标尺寸
-	UiRect rcControl = control->GetPos();
+	CRect rcControl = control->GetPos();
 	return ResizeBitmap(dest_width, dest_height, render->GetDC(), rcControl.left, rcControl.top, rcControl.GetWidth(), rcControl.GetHeight());
 }
 

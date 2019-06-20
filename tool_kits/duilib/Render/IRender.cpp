@@ -3,7 +3,7 @@
 namespace ui 
 {
 
-AutoClip::AutoClip(IRenderContext* pRender, const UiRect& rc, bool bClip)
+AutoClip::AutoClip(IRenderContext* pRender, const CRect& rc, bool bClip)
 {
 	m_pRender = NULL;
 	m_bClip = false;
@@ -17,7 +17,7 @@ AutoClip::AutoClip(IRenderContext* pRender, const UiRect& rc, bool bClip)
 	}
 }
 
-AutoClip::AutoClip(IRenderContext* pRender, const UiRect& rcRound, int width, int height, bool bClip)
+AutoClip::AutoClip(IRenderContext* pRender, const CRect& rcRound, int width, int height, bool bClip)
 {
 	m_pRender = NULL;
 	m_bClip = false;

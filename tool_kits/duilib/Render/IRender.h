@@ -9,8 +9,8 @@ namespace ui
 class UILIB_API IClip : public nbase::SupportWeakCallback
 {
 public:
-	virtual void CreateClip(HDC hDC, UiRect rc) = 0;
-	virtual void CreateRoundClip(HDC hDC, UiRect rc, int width, int height) = 0;
+	virtual void CreateClip(HDC hDC, CRect rc) = 0;
+	virtual void CreateRoundClip(HDC hDC, CRect rc, int width, int height) = 0;
 	virtual void ClearClip(HDC hDC) = 0;
 };
 
@@ -18,8 +18,8 @@ class IRenderContext;
 class UILIB_API AutoClip : public nbase::SupportWeakCallback
 {
 public:
-	AutoClip(IRenderContext* pRender, const UiRect& rc, bool bClip = true);
-	AutoClip(IRenderContext* pRender, const UiRect& rcRound, int width, int height, bool bClip = true);
+	AutoClip(IRenderContext* pRender, const CRect& rc, bool bClip = true);
+	AutoClip(IRenderContext* pRender, const CRect& rcRound, int width, int height, bool bClip = true);
 	~AutoClip();
 
 private:
@@ -38,8 +38,8 @@ class UILIB_API IBitmap : public nbase::SupportWeakCallback
 	virtual int	GetWidth() = 0;
 	virtual int GetHeight() = 0;
 
-	virtual void ClearAlpha(const UiRect& rcDirty, int alpha) = 0;
-	virtual void RestoreAlpha(const UiRect& rcDirty, const UiRect& rcShadowPadding, int alpha) = 0;
+	virtual void ClearAlpha(const CRect& rcDirty, int alpha) = 0;
+	virtual void RestoreAlpha(const CRect& rcDirty, const CRect& rcShadowPadding, int alpha) = 0;
 };
 
 class UILIB_API IPen : public nbase::SupportWeakCallback
@@ -149,14 +149,14 @@ public:
 	virtual void AddBezier(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) = 0;
 	virtual void AddCurve(const CPoint* points, int count) = 0;
 	virtual void AddRect(int left, int top, int right, int bottom) = 0;
-	virtual void AddRect(const UiRect& rect) = 0;
+	virtual void AddRect(const CRect& rect) = 0;
 	virtual void AddEllipse(int left, int top, int right, int bottom) = 0;
-	virtual void AddEllipse(const UiRect& rect) = 0;
+	virtual void AddEllipse(const CRect& rect) = 0;
 	virtual void AddArc(int x, int y, int width, int height, float startAngle, float sweepAngle) = 0;
 	virtual void AddPie(int x, int y, int width, int height, float startAngle, float sweepAngle) = 0;
 	virtual void AddPolygon(const CPoint* points, int count) = 0;
 
-	virtual UiRect GetBound(const IPen* pen) = 0;
+	virtual CRect GetBound(const IPen* pen) = 0;
 	virtual bool IsContainsPoint(int x, int y) = 0;
 	virtual bool IsStrokeContainsPoint(int x, int y, const IPen* pen) = 0;
 
@@ -175,8 +175,8 @@ public:
 	virtual BYTE* GetBits() = 0;
 	virtual int	GetWidth() = 0;
 	virtual int GetHeight() = 0;
-	virtual void ClearAlpha(const UiRect& rcDirty, int alpha = 0) = 0;
-	virtual void RestoreAlpha(const UiRect& rcDirty, const UiRect& rcShadowPadding = UiRect(), int alpha = 0) = 0;
+	virtual void ClearAlpha(const CRect& rcDirty, int alpha = 0) = 0;
+	virtual void RestoreAlpha(const CRect& rcDirty, const CRect& rcShadowPadding = CRect(), int alpha = 0) = 0;
 
 	virtual bool IsRenderTransparent() const = 0;
 	virtual bool SetRenderTransparent(bool bTransparent) = 0;
@@ -187,29 +187,29 @@ public:
 	virtual CPoint SetWindowOrg(CPoint ptOffset) = 0;
 	virtual CPoint GetWindowOrg() const = 0;
 
-	virtual void SetClip(const UiRect& rc) = 0;
-	virtual void SetRoundClip(const UiRect& rcItem, int width, int height) = 0;
+	virtual void SetClip(const CRect& rc) = 0;
+	virtual void SetRoundClip(const CRect& rcItem, int width, int height) = 0;
 	virtual void ClearClip() = 0;
 
 	virtual HRESULT BitBlt(int x, int y, int cx, int cy, HDC hdcSrc, int xSrc = 0, int yScr = 0, DWORD rop = SRCCOPY) = 0;
 	virtual bool AlphaBlend(int xDest, int yDest, int widthDest, int heightDest, HDC hdcSrc, int xSrc, int yScr, int widthSrc, int heightSrc, BYTE uFade = 255) = 0;
 
-	virtual void DrawImage(const UiRect& rcPaint, HBITMAP hBitmap, bool bAlphaChannel,
-		const UiRect& rcImageDest, const UiRect& rcImageSource, const UiRect& rcCorners, BYTE uFade = 255, bool xtiled = false, bool ytiled = false) = 0;
+	virtual void DrawImage(const CRect& rcPaint, HBITMAP hBitmap, bool bAlphaChannel,
+		const CRect& rcImageDest, const CRect& rcImageSource, const CRect& rcCorners, BYTE uFade = 255, bool xtiled = false, bool ytiled = false) = 0;
 
-	virtual void DrawColor(const UiRect& rc, DWORD dwColor, BYTE uFade = 255) = 0;
-	virtual void DrawColor(const UiRect& rc, const std::wstring& colorStr, BYTE uFade = 255) = 0;
+	virtual void DrawColor(const CRect& rc, DWORD dwColor, BYTE uFade = 255) = 0;
+	virtual void DrawColor(const CRect& rc, const std::wstring& colorStr, BYTE uFade = 255) = 0;
 
-	virtual void DrawLine(const UiRect& rc, int nSize, DWORD dwPenColor) = 0;
+	virtual void DrawLine(const CRect& rc, int nSize, DWORD dwPenColor) = 0;
 	virtual void DrawLine(const IPen* pen, int x1, int y1, int x2, int y2) = 0;
 	virtual void DrawBezier(const IPen* pen, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) = 0;
-	virtual void DrawRect(const UiRect& rc, int nSize, DWORD dwPenColor) = 0;
-	virtual void DrawText(const UiRect& rc, const std::wstring& strText, DWORD dwTextColor, int iFont, UINT uStyle, BYTE uFade = 255, bool bLineLimit = false) = 0;
+	virtual void DrawRect(const CRect& rc, int nSize, DWORD dwPenColor) = 0;
+	virtual void DrawText(const CRect& rc, const std::wstring& strText, DWORD dwTextColor, int iFont, UINT uStyle, BYTE uFade = 255, bool bLineLimit = false) = 0;
 
-	virtual void DrawEllipse(const UiRect& rc, int nSize, DWORD dwColor) = 0;
-	virtual void FillEllipse(const UiRect& rc, DWORD dwColor) = 0;
+	virtual void DrawEllipse(const CRect& rc, int nSize, DWORD dwColor) = 0;
+	virtual void FillEllipse(const CRect& rc, DWORD dwColor) = 0;
 
-	virtual UiRect MeasureText(const std::wstring& strText, int iFont, UINT uStyle, int width = DUI_NOSET_VALUE) = 0;
+	virtual CRect MeasureText(const std::wstring& strText, int iFont, UINT uStyle, int width = DUI_NOSET_VALUE) = 0;
 
 	virtual void DrawPath(const IPath* path, const IPen* pen) = 0;
 	virtual void FillPath(const IPath* path, const IBrush* brush) = 0;

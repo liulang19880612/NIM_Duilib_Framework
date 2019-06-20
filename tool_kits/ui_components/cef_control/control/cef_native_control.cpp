@@ -60,7 +60,7 @@ void CefNativeControl::ReCreateBrowser()
 	}
 }
 
-void CefNativeControl::SetPos(UiRect rc)
+void CefNativeControl::SetPos(CRect rc)
 {
 	__super::SetPos(rc);
 

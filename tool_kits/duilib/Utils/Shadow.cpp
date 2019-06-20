@@ -6,7 +6,7 @@ namespace ui
 class ShadowBox : public Box
 {
 public:
-	virtual void Paint(IRenderContext* pRender, const UiRect& rcPaint) override
+	virtual void Paint(IRenderContext* pRender, const CRect& rcPaint) override
 	{
 		auto rcPos = GetPaddingPos();
 		if (rcPaint.left >= rcPos.left && rcPaint.top >= rcPos.top && rcPaint.right <= rcPos.right && rcPaint.bottom <= rcPos.bottom) {
@@ -39,20 +39,20 @@ std::wstring Shadow::GetShadowImage() const
 	return m_strImage;
 }
 
-void Shadow::SetShadowCorner(const UiRect &rect)
+void Shadow::SetShadowCorner(const CRect &rect)
 {
 	m_rcDefaultShadowCorner = m_rcCurShadowCorner = rect;
 	DpiManager::GetInstance()->ScaleRect(m_rcCurShadowCorner);
 	m_rcShadowCornerBackup = m_rcCurShadowCorner;
 }
 
-UiRect Shadow::GetShadowCorner() const
+CRect Shadow::GetShadowCorner() const
 {
 	if (m_bShadowAttached) {
 		return m_rcCurShadowCorner;
 	}
 	else {
-		return UiRect(0, 0, 0, 0);
+		return CRect(0, 0, 0, 0);
 	}
 }
 
@@ -102,7 +102,7 @@ void Shadow::MaximizedOrRestored(bool isMaximized)
 		return;
 
 	if (isMaximized && m_pRoot) {
-		m_rcCurShadowCorner = UiRect(0, 0, 0, 0);
+		m_rcCurShadowCorner = CRect(0, 0, 0, 0);
 		m_pRoot->GetLayout()->SetPadding(m_rcCurShadowCorner, false);
 
 		if (m_bUseDefaultImage)

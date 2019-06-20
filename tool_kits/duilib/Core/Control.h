@@ -159,10 +159,10 @@ public:
 
 	/**
 	 * @brief 设置边框的大小
-	 * @param[in] rc 一个 `UiRect` 结构的边框大小集合
+	 * @param[in] rc 一个 `CRect` 结构的边框大小集合
 	 * @return 无
 	 */
-	void SetBorderSize(UiRect rc);
+	void SetBorderSize(CRect rc);
 
 	/**
 	 * @brief 获取左侧边框大小
@@ -472,20 +472,20 @@ public:
 	 * @param[in] bContainShadow 是否包含阴影，默认为 true 则包含阴影范围，否则 false 为不包含
 	 * @return 返回控件的位置信息
 	 */
-	virtual	UiRect GetPos(bool bContainShadow = true) const override;
+	virtual	CRect GetPos(bool bContainShadow = true) const override;
 
 	/**
 	 * @brief 设置控件位置
 	 * @param[in] rc 控件位置的描述信息
 	 * @return 无
 	 */
-	virtual void SetPos(UiRect rc) override;
+	virtual void SetPos(CRect rc) override;
 
 	/**
 	 * @brief 获取控件的外边距
 	 * @return 返回控件的外边距
 	 */
-	virtual UiRect GetMargin() const;
+	virtual CRect GetMargin() const;
 
 	/**
 	 * @brief 设置控件的外边距
@@ -493,7 +493,7 @@ public:
 	 * @param[in] bNeedDpiScale 是否让外边距根据 DPI 适配，默认为 true，false 不适配 DPI
 	 * @return 无
 	 */
-	virtual void SetMargin(UiRect rcMargin, bool bNeedDpiScale = true);
+	virtual void SetMargin(CRect rcMargin, bool bNeedDpiScale = true);
 
 	/**
 	 * @brief 计算控件大小
@@ -632,7 +632,7 @@ public:
 	 * @param[in] 待补充
 	 * @return 待补充
 	 */
-	virtual void AlphaPaint(IRenderContext* pRender, const UiRect& rcPaint);
+	virtual void AlphaPaint(IRenderContext* pRender, const CRect& rcPaint);
 	
 	/**
 	* @brief 绘制控件的入口函数
@@ -640,7 +640,7 @@ public:
 	* @param[in] rcPaint 指定绘制坐标
 	* @return 无
 	*/
-	virtual void Paint(IRenderContext* pRender, const UiRect& rcPaint);
+	virtual void Paint(IRenderContext* pRender, const CRect& rcPaint);
 
 	/**
 	* @brief 绘制控件子项入口函数
@@ -648,7 +648,7 @@ public:
 	* @param[in] rcPaint 指定绘制坐标
 	* @return 无
 	*/
-	virtual void PaintChild(IRenderContext* pRender, const UiRect& rcPaint) {};
+	virtual void PaintChild(IRenderContext* pRender, const CRect& rcPaint) {};
 
 	/**
 	* @brief 设置是否对绘制范围做剪裁限制
@@ -899,9 +899,9 @@ protected:
 	CSize m_szEstimateSize;
 	CPoint m_renderOffset;
 	CSize m_cxyBorderRound;
-	UiRect m_rcMargin;
-	UiRect m_rcPaint;
-	UiRect m_rcBorderSize;
+	CRect m_rcMargin;
+	CRect m_rcPaint;
+	CRect m_rcBorderSize;
 	CursorType m_cursorType;	//影响控件的鼠标形状
 	ControlStateType m_uButtonState;
 	std::wstring m_sToolTipText;

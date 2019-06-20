@@ -31,6 +31,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcef_dll_wrapper", "..\th
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "controls", "controls\controls.vcxproj", "{8BD95440-9000-4745-8011-27DD553EF06F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PbqDemo", "PbqDemo\PbqDemo.vcxproj", "{9EBBAC36-FAF5-4B40-8735-F4EE6F4A084D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -127,6 +129,12 @@ Global
 		{8BD95440-9000-4745-8011-27DD553EF06F}.Release|Win32.Build.0 = Release|Win32
 		{8BD95440-9000-4745-8011-27DD553EF06F}.Release|x64.ActiveCfg = Release|x64
 		{8BD95440-9000-4745-8011-27DD553EF06F}.Release|x64.Build.0 = Release|x64
+		{9EBBAC36-FAF5-4B40-8735-F4EE6F4A084D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9EBBAC36-FAF5-4B40-8735-F4EE6F4A084D}.Debug|Win32.Build.0 = Debug|Win32
+		{9EBBAC36-FAF5-4B40-8735-F4EE6F4A084D}.Debug|x64.ActiveCfg = Debug|Win32
+		{9EBBAC36-FAF5-4B40-8735-F4EE6F4A084D}.Release|Win32.ActiveCfg = Release|Win32
+		{9EBBAC36-FAF5-4B40-8735-F4EE6F4A084D}.Release|Win32.Build.0 = Release|Win32
+		{9EBBAC36-FAF5-4B40-8735-F4EE6F4A084D}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -143,6 +151,7 @@ Global
 		{0149BA6E-3C0A-426D-AA0A-0B9EC7742F19} = {66F85B8F-11B7-4964-B51E-99DF85D8FE00}
 		{A9D6DC71-C0DC-4549-AEA0-3B15B44E86A9} = {1DA0A8E2-5832-42FC-83F7-2CDCAD379C90}
 		{8BD95440-9000-4745-8011-27DD553EF06F} = {B2087994-3DF6-4A57-B8C6-6F744520D7FA}
+		{9EBBAC36-FAF5-4B40-8735-F4EE6F4A084D} = {B2087994-3DF6-4A57-B8C6-6F744520D7FA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {68CA0970-4242-4E4F-94D2-C19760FCA05D}

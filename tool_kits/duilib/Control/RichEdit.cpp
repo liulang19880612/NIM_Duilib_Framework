@@ -41,8 +41,8 @@ public:
     virtual ~CTxtWinHost();
 
     ITextServices* GetTextServices(void) { return pserv; }
-    void SetClientRect(UiRect *prc);
-    UiRect* GetClientRect() { return &rcClient; }
+    void SetClientRect(CRect *prc);
+    CRect* GetClientRect() { return &rcClient; }
     BOOL GetWordWrap(void) { return fWordWrap; }
     void SetWordWrap(BOOL fWordWrap);
     BOOL GetReadOnly();
@@ -68,7 +68,7 @@ public:
     HRESULT OnTxInPlaceDeactivate();
     HRESULT OnTxInPlaceActivate(LPCRECT prcClient);
     BOOL GetActiveState(void) { return fInplaceActive; }
-    BOOL DoSetCursor(UiRect *prc, POINT *pt);
+    BOOL DoSetCursor(CRect *prc, POINT *pt);
     void SetTransparent(BOOL fTransparent);
     void GetControlRect(LPRECT prc);
     LONG SetAccelPos(LONG laccelpos);
@@ -193,7 +193,7 @@ private:
     DWORD		dwEventMask;			// HandleMessage mask to pass on to parent window
     LONG		icf;
     LONG		ipf;
-    UiRect		rcClient;				// Client Rect for this control
+    CRect		rcClient;				// Client Rect for this control
     SIZEL		sizelExtent;			// Extent array
     CHARFORMAT2W cf;					// Default character format
     PARAFORMAT2	pf;					    // Default paragraph format
@@ -561,12 +561,12 @@ void CTxtWinHost::TxInvalidateRect(LPCRECT prc, BOOL fMode)
 {
 	CPoint scrollOffset = m_re->GetScrollOffset();
     if( prc == NULL ) {
-		UiRect newRcClient = rcClient;
+		CRect newRcClient = rcClient;
 		newRcClient.Offset(-scrollOffset.x, -scrollOffset.y);
         m_re->GetWindow()->Invalidate(newRcClient);
         return;
     }
-    UiRect rc = *prc;
+    CRect rc = *prc;
 	rc.Offset(-scrollOffset.x, -scrollOffset.y);
     m_re->GetWindow()->Invalidate(rc);
 }
@@ -779,7 +779,7 @@ HRESULT CTxtWinHost::TxGetPropertyBits(DWORD dwMask, DWORD *pdwBits)
 HRESULT CTxtWinHost::TxNotify(DWORD iNotify, void *pv)
 {
     if( iNotify == EN_REQUESTRESIZE ) {
-        UiRect rc;
+        CRect rc;
         REQRESIZE *preqsz = (REQRESIZE *)pv;
         GetControlRect(&rc);
         rc.bottom = rc.top + preqsz->rc.bottom;
@@ -957,7 +957,7 @@ void CTxtWinHost::SetDefaultLeftIndent(LONG lNewIndent)
     pserv->OnTxPropertyBitsChange(TXTBIT_PARAFORMATCHANGE, 0);
 }
 
-void CTxtWinHost::SetClientRect(UiRect *prc) 
+void CTxtWinHost::SetClientRect(CRect *prc) 
 {
     rcClient = *prc;
 
@@ -1012,16 +1012,16 @@ HRESULT	CTxtWinHost::OnTxInPlaceActivate(LPCRECT prcClient)
     return hr;
 }
 
-BOOL CTxtWinHost::DoSetCursor(UiRect *prc, POINT *pt)
+BOOL CTxtWinHost::DoSetCursor(CRect *prc, POINT *pt)
 {
-    UiRect rc = (prc != NULL) ? *prc : rcClient;
+    CRect rc = (prc != NULL) ? *prc : rcClient;
 
     // Is this in our rectangle?
 	CPoint newPt = *pt;
 	newPt.Offset(m_re->GetScrollOffset());
     if (PtInRect(&rc, newPt))
     {
-        UiRect *prcClient = (!fInplaceActive || prc) ? &rc : NULL;
+        CRect *prcClient = (!fInplaceActive || prc) ? &rc : NULL;
         pserv->OnTxSetCursor(DVASPECT_CONTENT,	-1, NULL, NULL,  m_re->GetWindow()->GetPaintDC(),
             NULL, prcClient, newPt.x, newPt.y);
 
@@ -1033,7 +1033,7 @@ BOOL CTxtWinHost::DoSetCursor(UiRect *prc, POINT *pt)
 
 void CTxtWinHost::GetControlRect(LPRECT prc)
 {
-	UiRect rc = rcClient;
+	CRect rc = rcClient;
 	VerAlignType alignType = m_re->GetTextVerAlignType();
 	if (alignType != kVerAlignTop) {
 		LONG iWidth = rc.right - rc.left;
@@ -2199,7 +2199,7 @@ CSize RichEdit::EstimateSize(CSize szAvailable)
     return size;
 }
 
-void RichEdit::SetPos(UiRect rc)
+void RichEdit::SetPos(CRect rc)
 {
     Control::SetPos(rc);
     rc = m_rcItem;
@@ -2248,11 +2248,11 @@ void RichEdit::SetPos(UiRect rc)
     }
 
     if( m_pVerticalScrollBar != NULL && m_pVerticalScrollBar->IsValid() ) {
-        UiRect rcScrollBarPos(rc.right, rc.top, rc.right + m_pVerticalScrollBar->GetFixedWidth(), rc.bottom);
+        CRect rcScrollBarPos(rc.right, rc.top, rc.right + m_pVerticalScrollBar->GetFixedWidth(), rc.bottom);
         m_pVerticalScrollBar->SetPos(rcScrollBarPos);
     }
     if( m_pHorizontalScrollBar != NULL && m_pHorizontalScrollBar->IsValid() ) {
-        UiRect rcScrollBarPos(rc.left, rc.bottom, rc.right, rc.bottom + m_pHorizontalScrollBar->GetFixedHeight());
+        CRect rcScrollBarPos(rc.left, rc.bottom, rc.right, rc.bottom + m_pHorizontalScrollBar->GetFixedHeight());
         m_pHorizontalScrollBar->SetPos(rcScrollBarPos);
     }
 
@@ -2515,15 +2515,15 @@ void RichEdit::OnMouseMessage(UINT uMsg, EventArgs& event)
 	TxSendMessage(uMsg, event.wParam, MAKELPARAM(pt.x, pt.y), NULL);
 }
 
-void RichEdit::Paint(IRenderContext* pRender, const UiRect& rcPaint)
+void RichEdit::Paint(IRenderContext* pRender, const CRect& rcPaint)
 {
-    UiRect rcTemp;
+    CRect rcTemp;
     if( !::IntersectRect(&rcTemp, &rcPaint, &m_rcItem) ) return;
 
     Control::Paint(pRender, rcPaint);
 
     if( m_pTwh ) {
-        UiRect rc;
+        CRect rc;
         m_pTwh->GetControlRect(&rc);
         // Remember wparam is actually the hdc and lparam is the update
         // rect because this message has been preprocessed by the window.
@@ -2536,7 +2536,7 @@ void RichEdit::Paint(IRenderContext* pRender, const UiRect& rcPaint)
             NULL, 				   	// Target device HDC
             (RECTL*)&rc,			// Bounding client rectangle
             NULL, 		            // Clipping rectangle for metafiles
-            (UiRect*)&rcPaint,		// Update rectangle
+            (CRect*)&rcPaint,		// Update rectangle
             NULL, 	   				// Call back function
             NULL,					// Call back parameter
             0);				        // What view of the object
@@ -2563,15 +2563,15 @@ void RichEdit::Paint(IRenderContext* pRender, const UiRect& rcPaint)
 	}
 }
 
-void RichEdit::PaintChild(IRenderContext* pRender, const UiRect& rcPaint)
+void RichEdit::PaintChild(IRenderContext* pRender, const CRect& rcPaint)
 {
-	UiRect rcTemp;
+	CRect rcTemp;
 	if (!::IntersectRect(&rcTemp, &rcPaint, &m_rcItem)) return;
 
 	PaintCaret(pRender, rcPaint);
 
     if( m_items.size() > 0 ) {
-        UiRect rc = m_rcItem;
+        CRect rc = m_rcItem;
         rc.left += m_pLayout->GetPadding().left;
         rc.top += m_pLayout->GetPadding().top;
         rc.right -= m_pLayout->GetPadding().right;
@@ -2583,7 +2583,7 @@ void RichEdit::PaintChild(IRenderContext* pRender, const UiRect& rcPaint)
 			for( auto it = m_items.begin(); it != m_items.end(); it++ ) {
 				auto pControl = *it;
                 if( !pControl->IsVisible() ) continue;
-				UiRect controlPos = pControl->GetPos();
+				CRect controlPos = pControl->GetPos();
 				if (!::IntersectRect(&rcTemp, &rcPaint, &controlPos)) continue;
                 if( pControl ->IsFloat() ) {
 					if( !::IntersectRect(&rcTemp, &m_rcItem, &controlPos )) continue;
@@ -2596,7 +2596,7 @@ void RichEdit::PaintChild(IRenderContext* pRender, const UiRect& rcPaint)
 			for( auto it = m_items.begin(); it != m_items.end(); it++ ) {
 				auto pControl = *it;
                 if( !pControl->IsVisible() ) continue;
-				UiRect controlPos = pControl->GetPos();
+				CRect controlPos = pControl->GetPos();
 				if (!::IntersectRect(&rcTemp, &rcPaint, &controlPos)) continue;
                 if( pControl ->IsFloat() ) {
 					if( !::IntersectRect(&rcTemp, &m_rcItem, &controlPos) ) continue;
@@ -2611,14 +2611,14 @@ void RichEdit::PaintChild(IRenderContext* pRender, const UiRect& rcPaint)
     }
 
     if( m_pVerticalScrollBar != NULL && m_pVerticalScrollBar->IsVisible() ) {
-		UiRect verBarPos = m_pVerticalScrollBar->GetPos();
+		CRect verBarPos = m_pVerticalScrollBar->GetPos();
 		if( ::IntersectRect(&rcTemp, &rcPaint, &verBarPos) ) {
             m_pVerticalScrollBar->AlphaPaint(pRender, rcPaint);
         }
     }
 
     if( m_pHorizontalScrollBar != NULL && m_pHorizontalScrollBar->IsVisible() ) {
-		UiRect horBarPos = m_pVerticalScrollBar->GetPos();
+		CRect horBarPos = m_pVerticalScrollBar->GetPos();
 		if( ::IntersectRect(&rcTemp, &rcPaint, &horBarPos) ) {
             m_pHorizontalScrollBar->AlphaPaint(pRender, rcPaint);
         }
@@ -2810,13 +2810,13 @@ void RichEdit::ChangeCaretVisiable()
 	Invalidate();
 }
 
-void RichEdit::PaintCaret(IRenderContext* pRender, const UiRect& rcPaint)
+void RichEdit::PaintCaret(IRenderContext* pRender, const CRect& rcPaint)
 {
 	if (m_bReadOnly && m_bNoCaretReadonly)
 		return;
 
 	if (m_bIsCaretVisiable && !m_bIsComposition) {
-		UiRect rect(m_iCaretPosX, m_iCaretPosY, m_iCaretPosX, m_iCaretPosY + m_iCaretHeight);
+		CRect rect(m_iCaretPosX, m_iCaretPosY, m_iCaretPosX, m_iCaretPosY + m_iCaretHeight);
 		DWORD dwClrColor = 0xff000000;
 
 		if (!m_sCaretColor.empty())
@@ -2894,7 +2894,7 @@ void RichEdit::PaintPromptText(IRenderContext* pRender)
 	if (strPrompt.empty() || m_sPromptColor.empty())
 		return;
 
-	UiRect rc;
+	CRect rc;
 	m_pTwh->GetControlRect(&rc);
 
 	DWORD dwClrColor = GlobalManager::GetTextColor(m_sPromptColor);

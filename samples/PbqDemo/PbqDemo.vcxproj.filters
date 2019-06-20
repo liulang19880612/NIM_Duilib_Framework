@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="UI线程">
+      <UniqueIdentifier>{fe83efac-131b-4d08-a13d-838deebb33f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="主窗口">
+      <UniqueIdentifier>{ea875da1-4a70-4df1-b6e3-43caf595f30d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="托盘">
+      <UniqueIdentifier>{ca6e85dc-43d5-49b3-b9cf-b5ed50e22ba2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UIThread\RAUIThread.h">
+      <Filter>UI线程</Filter>
+    </ClInclude>
+    <ClInclude Include="MainForm\RAMainForm.h">
+      <Filter>主窗口</Filter>
+    </ClInclude>
+    <ClInclude Include="RA.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UIThread\RAUIThread.cpp">
+      <Filter>UI线程</Filter>
+    </ClCompile>
+    <ClCompile Include="MainForm\RAMainForm.cpp">
+      <Filter>主窗口</Filter>
+    </ClCompile>
+    <ClCompile Include="RA.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="RA.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RA.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TrayIcon.impl">
+      <Filter>主窗口</Filter>
+    </None>
+  </ItemGroup>
+</Project>

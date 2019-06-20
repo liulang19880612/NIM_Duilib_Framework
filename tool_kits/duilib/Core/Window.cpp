@@ -188,7 +188,7 @@ void Window::Unsubclass()
 	m_bSubclassed = false;
 }
 
-HWND Window::Create(HWND hwndParent, LPCTSTR pstrName, DWORD dwStyle, DWORD dwExStyle, bool isLayeredWindow, const UiRect& rc)
+HWND Window::Create(HWND hwndParent, LPCTSTR pstrName, DWORD dwStyle, DWORD dwExStyle, bool isLayeredWindow, const CRect& rc)
 {
     if( !GetSuperClassName().empty() && !RegisterSuperClass() ) return NULL;
     if( GetSuperClassName().empty() && !RegisterWindowClass() ) return NULL;
@@ -284,10 +284,10 @@ void Window::CenterWindow()
 {
     ASSERT(::IsWindow(m_hWnd));
     ASSERT((GetWindowStyle(m_hWnd)&WS_CHILD)==0);
-    UiRect rcDlg;
+    CRect rcDlg;
     ::GetWindowRect(m_hWnd, &rcDlg);
-    UiRect rcArea;
-    UiRect rcCenter;
+    CRect rcArea;
+    CRect rcCenter;
 	HWND hWnd = GetHWND();
     HWND hWndCenter = ::GetWindowOwner(m_hWnd);
 	if (hWndCenter!=NULL)
@@ -608,22 +608,22 @@ POINT Window::GetMousePos() const
 	return m_ptLastMousePos;
 }
 
-UiRect Window::GetSizeBox()
+CRect Window::GetSizeBox()
 {
 	return m_rcSizeBox;
 }
 
-void Window::SetSizeBox(const UiRect& rcSizeBox)
+void Window::SetSizeBox(const CRect& rcSizeBox)
 {
 	m_rcSizeBox = rcSizeBox;
 }
 
-UiRect Window::GetCaptionRect() const
+CRect Window::GetCaptionRect() const
 {
 	return m_rcCaption;
 }
 
-void Window::SetCaptionRect(UiRect& rcCaption)
+void Window::SetCaptionRect(CRect& rcCaption)
 {
 	DpiManager::GetInstance()->ScaleRect(rcCaption);
 	m_rcCaption = rcCaption;
@@ -642,23 +642,23 @@ void Window::SetRoundCorner(int cx, int cy)
 	m_szRoundCorner.cy = cy;
 }
 
-UiRect Window::GetMaximizeInfo() const
+CRect Window::GetMaximizeInfo() const
 {
 	return m_rcMaximizeInfo;
 }
 
-void Window::SetMaximizeInfo(UiRect& rcMaximize)
+void Window::SetMaximizeInfo(CRect& rcMaximize)
 {
 	DpiManager::GetInstance()->ScaleRect(rcMaximize);
 	m_rcMaximizeInfo = rcMaximize;
 }
 
-UiRect Window::GetAlphaFixCorner() const
+CRect Window::GetAlphaFixCorner() const
 {
 	return m_rcAlphaFix;
 }
 
-void Window::SetAlphaFixCorner(UiRect& rc)
+void Window::SetAlphaFixCorner(CRect& rc)
 {
 	DpiManager::GetInstance()->ScaleRect(rc);
 	m_rcAlphaFix = rc;
@@ -694,23 +694,23 @@ void Window::SetShadowImage(const std::wstring &strImage)
 	m_shadow.SetShadowImage(strImage);
 }
 
-UiRect Window::GetShadowCorner() const
+CRect Window::GetShadowCorner() const
 {
 	return m_shadow.GetShadowCorner();
 }
 
-void Window::SetShadowCorner(const UiRect rect)
+void Window::SetShadowCorner(const CRect rect)
 {
 	m_shadow.SetShadowCorner(rect);
 }
 
-UiRect Window::GetPos(bool bContainShadow) const
+CRect Window::GetPos(bool bContainShadow) const
 {
-	UiRect rcPos;
+	CRect rcPos;
 	::GetWindowRect(m_hWnd, &rcPos);
 
 	if (!bContainShadow) {
-		UiRect padding = m_shadow.GetShadowCorner();
+		CRect padding = m_shadow.GetShadowCorner();
 		rcPos.left += padding.left;
 		rcPos.right -= padding.right;
 		rcPos.top += padding.top;
@@ -719,9 +719,9 @@ UiRect Window::GetPos(bool bContainShadow) const
 	return rcPos;
 }
 
-void Window::SetPos(const UiRect& rc, bool bNeedDpiScale, UINT uFlags, HWND hWndInsertAfter, bool bContainShadow)
+void Window::SetPos(const CRect& rc, bool bNeedDpiScale, UINT uFlags, HWND hWndInsertAfter, bool bContainShadow)
 {
-	UiRect rcNewPos = rc;
+	CRect rcNewPos = rc;
 	if (bNeedDpiScale)
 		DpiManager::GetInstance()->ScaleRect(rcNewPos);
 
@@ -736,7 +736,7 @@ CSize Window::GetMinInfo(bool bContainShadow) const
 {
 	CSize xy = m_szMinWindow;
 	if (!bContainShadow) {
-		UiRect rcShadow = m_shadow.GetShadowCorner();
+		CRect rcShadow = m_shadow.GetShadowCorner();
 		if (xy.cx != 0) {
 			xy.cx -= rcShadow.left + rcShadow.right;
 		}
@@ -756,7 +756,7 @@ void Window::SetMinInfo(int cx, int cy, bool bContainShadow)
 	ASSERT(cx >= 0 && cy >= 0);
 
 	if (!bContainShadow) {
-		UiRect rcShadow = m_shadow.GetShadowCorner();
+		CRect rcShadow = m_shadow.GetShadowCorner();
 		if (cx != 0) {
 			cx += rcShadow.left + rcShadow.right;
 		}
@@ -772,7 +772,7 @@ CSize Window::GetMaxInfo(bool bContainShadow) const
 {
 	CSize xy = m_szMaxWindow;
 	if (!bContainShadow) {
-		UiRect rcShadow = m_shadow.GetShadowCorner();
+		CRect rcShadow = m_shadow.GetShadowCorner();
 		if (xy.cx != 0) {
 			xy.cx -= rcShadow.left + rcShadow.right;
 		}
@@ -792,7 +792,7 @@ void Window::SetMaxInfo(int cx, int cy, bool bContainShadow)
 	ASSERT(cx >= 0 && cy >= 0);
 
 	if (!bContainShadow) {
-		UiRect rcShadow = m_shadow.GetShadowCorner();
+		CRect rcShadow = m_shadow.GetShadowCorner();
 		if (cx != 0) {
 			cx += rcShadow.left + rcShadow.right;
 		}
@@ -808,7 +808,7 @@ CSize Window::GetInitSize(bool bContainShadow) const
 {
 	CSize xy = m_szInitWindowSize;
 	if (!bContainShadow) {
-		UiRect rcShadow = m_shadow.GetShadowCorner();
+		CRect rcShadow = m_shadow.GetShadowCorner();
 		if (xy.cx != 0) {
 			xy.cx -= rcShadow.left + rcShadow.right;
 		}
@@ -829,7 +829,7 @@ void Window::SetInitSize(int cx, int cy, bool bContainShadow, bool bNeedDpiScale
 	}
 
 	if (!bContainShadow) {
-		UiRect rcShadow = m_shadow.GetShadowCorner();
+		CRect rcShadow = m_shadow.GetShadowCorner();
 		cx += rcShadow.left + rcShadow.right;
 		cy += rcShadow.top + rcShadow.bottom;
 	}
@@ -1779,7 +1779,7 @@ ui::IRenderContext* Window::GetRenderContext() const
 	return m_renderContext.get();
 }
 
-void Window::Invalidate(const UiRect& rcItem)
+void Window::Invalidate(const CRect& rcItem)
 {
 	::InvalidateRect(m_hWnd, &rcItem, FALSE);
 	// Invalidating a layered window will not trigger a WM_PAINT message,
@@ -1805,20 +1805,20 @@ void Window::Paint()
 		if (m_pRoot->GetMaxWidth() >= 0 && needSize.cx > m_pRoot->GetMaxWidth()) needSize.cx = m_pRoot->GetMaxWidth();
 		if (needSize.cy < m_pRoot->GetMinHeight()) needSize.cy = m_pRoot->GetMinHeight();
 		if (needSize.cy > m_pRoot->GetMaxHeight()) needSize.cy = m_pRoot->GetMaxHeight();
-		UiRect rect;
+		CRect rect;
 		::GetWindowRect(m_hWnd, &rect);
 		::MoveWindow(m_hWnd, rect.left, rect.top, needSize.cx, needSize.cy, TRUE);
 	}
 
 	// Should we paint?
-	UiRect rcPaint;
+	CRect rcPaint;
 	if (!::GetUpdateRect(m_hWnd, &rcPaint, FALSE) && !m_bFirstLayout) {
 		return;
 	}
 
-	UiRect rcClient;
+	CRect rcClient;
 	::GetClientRect(m_hWnd, &rcClient);
-	UiRect rcWindow;
+	CRect rcWindow;
 	::GetWindowRect(m_hWnd, &rcWindow);
 
 	//使用层窗口时，窗口部分在屏幕外时，获取到的无效区域仅仅是屏幕内的部分，这里做修正处理
@@ -1893,9 +1893,9 @@ void Window::Paint()
 	if (m_bIsLayeredWindow) {
 		if (m_shadow.IsShadowAttached() && m_renderOffset.x == 0 && m_renderOffset.y == 0) {
 			//补救由于Gdi绘制造成的alpha通道为0
-			UiRect rcNewPaint = rcPaint;
+			CRect rcNewPaint = rcPaint;
 			rcNewPaint.Intersect(m_pRoot->GetPaddingPos());
-			UiRect rcRootPadding = m_pRoot->GetLayout()->GetPadding();
+			CRect rcRootPadding = m_pRoot->GetLayout()->GetPadding();
 
 			//考虑圆角
 			rcRootPadding.left += 1;
@@ -1906,15 +1906,15 @@ void Window::Paint()
 			m_renderContext->RestoreAlpha(rcNewPaint, rcRootPadding);
 		}
 		else {
-			UiRect rcAlphaFixCorner = GetAlphaFixCorner();
+			CRect rcAlphaFixCorner = GetAlphaFixCorner();
 			if (rcAlphaFixCorner.left > 0 || rcAlphaFixCorner.top > 0 || rcAlphaFixCorner.right > 0 || rcAlphaFixCorner.bottom > 0)
 			{
-				UiRect rcNewPaint = rcPaint;
-				UiRect rcRootPaddingPos = m_pRoot->GetPaddingPos();
+				CRect rcNewPaint = rcPaint;
+				CRect rcRootPaddingPos = m_pRoot->GetPaddingPos();
 				rcRootPaddingPos.Deflate(rcAlphaFixCorner);
 				rcNewPaint.Intersect(rcRootPaddingPos);
 
-				UiRect rcRootPadding;
+				CRect rcRootPadding;
 				m_renderContext->RestoreAlpha(rcNewPaint, rcRootPadding);
 			}
 		}
@@ -2034,7 +2034,7 @@ Control* CALLBACK Window::__FindControlFromCount(Control* /*pThis*/, LPVOID pDat
 Control* CALLBACK Window::__FindControlFromPoint(Control* pThis, LPVOID pData)
 {
 	LPPOINT pPoint = static_cast<LPPOINT>(pData);
-	UiRect pos = pThis->GetPos();
+	CRect pos = pThis->GetPos();
 	return ::PtInRect(&pos, *pPoint) ? pThis : NULL;
 }
 

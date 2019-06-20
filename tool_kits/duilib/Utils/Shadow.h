@@ -30,13 +30,13 @@ public:
 	 * @param[in] rect 要设置的九宫格属性
 	 * @return 无
 	 */
-	void SetShadowCorner(const UiRect &rect);
+	void SetShadowCorner(const CRect &rect);
 
 	/**
 	 * @brief 获取阴影的九宫格属性
 	 * @return 返回阴影的九宫格属性
 	 */
-	UiRect GetShadowCorner() const;
+	CRect GetShadowCorner() const;
 
 	/**
 	 * @brief 根据初始化的阴影范围重置阴影边框
@@ -86,9 +86,9 @@ private:
 	bool m_bShadowAttached;
 	bool m_bUseDefaultImage;
 	std::wstring m_strImage;
-	UiRect m_rcCurShadowCorner;
-	UiRect m_rcDefaultShadowCorner;
-	UiRect m_rcShadowCornerBackup;
+	CRect m_rcCurShadowCorner;
+	CRect m_rcDefaultShadowCorner;
+	CRect m_rcShadowCornerBackup;
 
 	Box* m_pRoot;
 };

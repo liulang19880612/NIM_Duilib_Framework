@@ -119,7 +119,7 @@ Box* WindowBuilder::Create(CreateControlCallback pCallback, Window* pManager, Bo
 						pManager->SetInitSize(xy.cx, nWindowHeight, false, false);
 					}
 					else if( strName == _T("sizebox") ) {
-						UiRect rcSizeBox;
+						CRect rcSizeBox;
 						LPTSTR pstr = NULL;
 						rcSizeBox.left = _tcstol(strValue.c_str(), &pstr, 10);  ASSERT(pstr);    
 						rcSizeBox.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
@@ -128,7 +128,7 @@ Box* WindowBuilder::Create(CreateControlCallback pCallback, Window* pManager, Bo
 						pManager->SetSizeBox(rcSizeBox);
 					}
 					else if( strName == _T("caption") ) {
-						UiRect rcCaption;
+						CRect rcCaption;
 						LPTSTR pstr = NULL;
 						rcCaption.left = _tcstol(strValue.c_str(), &pstr, 10);  ASSERT(pstr);    
 						rcCaption.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
@@ -164,7 +164,7 @@ Box* WindowBuilder::Create(CreateControlCallback pCallback, Window* pManager, Bo
 						pManager->SetShadowImage(strValue);
 					}
 					else if (strName == _T("shadowcorner")) {
-						UiRect rc;
+						CRect rc;
 						LPTSTR pstr = NULL;
 						rc.left = _tcstol(strValue.c_str(), &pstr, 10);  ASSERT(pstr);
 						rc.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
@@ -173,7 +173,7 @@ Box* WindowBuilder::Create(CreateControlCallback pCallback, Window* pManager, Bo
 						pManager->SetShadowCorner(rc);
 					}
 					else if (strName == _T("alphafixcorner") || strName == _T("custom_shadow")) {
-						UiRect rc;
+						CRect rc;
 						LPTSTR pstr = NULL;
 						rc.left = _tcstol(strValue.c_str(), &pstr, 10);  ASSERT(pstr);
 						rc.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);

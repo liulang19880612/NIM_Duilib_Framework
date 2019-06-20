@@ -10,7 +10,7 @@
 namespace ui 
 {
 
-CSize VirtualLayout::ArrangeChild(const std::vector<Control*>& items, UiRect rc) 
+CSize VirtualLayout::ArrangeChild(const std::vector<Control*>& items, CRect rc) 
 {
     CSize sz(rc.GetWidth(), 0);
 
@@ -136,7 +136,7 @@ void VirtualListBox::GetDisplayCollection(std::vector<int>& collection)
 	if (GetCount() == 0)
 		return;
 
-	UiRect rcThis = this->GetPos(false);
+	CRect rcThis = this->GetPos(false);
 
 	int min = GetScrollPos().cy / m_nElementHeight;
 	int max = min + (rcThis.GetHeight() / m_nElementHeight);
@@ -198,7 +198,7 @@ void VirtualListBox::ReArrangeChild(bool bForce)
 
 	if (direction == kScrollDown) {
 		// 向下滚动
-		ui::UiRect rcItem = m_rcItem;
+		ui::CRect rcItem = m_rcItem;
 		rcItem.bottom = rcItem.top + nTopIndexBottom;
 
 		for (int i = 0; i < (int)m_items.size(); i++) {
@@ -218,7 +218,7 @@ void VirtualListBox::ReArrangeChild(bool bForce)
 		int nHideCount = (int)m_items.size() - nDisplayCount;
 
 		// 上半部分
-		UiRect rcItem = m_rcItem;
+		CRect rcItem = m_rcItem;
 		rcItem.top = m_rcItem.top + nTopIndexBottom;
 		for (int i = nHideCount - 1; i >= 0; i--) {
 			rcItem.bottom = rcItem.top;
@@ -329,7 +329,7 @@ void VirtualListBox::HandleMessage(ui::EventArgs& event) {
     __super::HandleMessage(event);
 }
 
-void VirtualListBox::SetPos(UiRect rc) 
+void VirtualListBox::SetPos(CRect rc) 
 {
     bool bChange = false;
     if (!m_rcItem.Equal(rc))
@@ -421,12 +421,12 @@ bool VirtualListBox::NeedReArrange(ScrollDirection &direction)
     if (GetElementCount() <= nCount)
         return false;
 
-    UiRect rcThis = this->GetPos();
+    CRect rcThis = this->GetPos();
     if (rcThis.GetWidth() <= 0)
         return false;
 
 	int nPos = m_pVerticalScrollBar->GetScrollPos();
-    UiRect rcItem;
+    CRect rcItem;
 
     // 补救措施
     // 情况一：通讯录列表，一开始不可见，切换后可见，如果提前布局，

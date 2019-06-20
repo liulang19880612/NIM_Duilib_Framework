@@ -212,7 +212,7 @@ void DpiManager::ScaleRect(RECT &rect)
 	rect.bottom = rect.top + height;
 }
 
-void DpiManager::ScaleRect(UiRect &rect)
+void DpiManager::ScaleRect(CRect &rect)
 {
 	if (!m_bAdaptDPI || m_nScaleFactor == 100)
 		return;

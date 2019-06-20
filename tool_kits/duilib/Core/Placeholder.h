@@ -258,14 +258,14 @@ public:
 	 * @param[in] bContainShadow 是否包含阴影位置，默认为 true
 	 * @return 返回控件位置
 	 */
-	virtual	UiRect GetPos(bool bContainShadow = true) const;
+	virtual	CRect GetPos(bool bContainShadow = true) const;
 
 	/**
 	 * @brief 设置控件位置
 	 * @param[in] rc 要设置的位置信息
 	 * @return 无
 	 */
-	virtual void SetPos(UiRect rc);
+	virtual void SetPos(CRect rc);
 
 	/**
 	 * @brief 进行布局
@@ -301,7 +301,7 @@ public:
 	 * @param[in] 待补充
 	 * @return 待补充
 	 */
-	UiRect GetPosWithScrollOffset() const;
+	CRect GetPosWithScrollOffset() const;
 
 	/**
 	 * @brief 待补充
@@ -326,7 +326,7 @@ protected:
 	CSize m_cxyFixed;
 	CSize m_cxyMin;
 	CSize m_cxyMax;
-	UiRect m_rcItem;
+	CRect m_rcItem;
 	HorAlignType m_horAlignType;
 	VerAlignType m_verAlignType;
 	bool m_bFloat;

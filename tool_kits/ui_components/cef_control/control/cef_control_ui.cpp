@@ -67,7 +67,7 @@ void CefControl::ReCreateBrowser()
 	}	
 }
 
-void CefControl::SetPos(UiRect rc)
+void CefControl::SetPos(CRect rc)
 {
 	__super::SetPos(rc);
 
@@ -118,7 +118,7 @@ void CefControl::SetInternVisible(bool bVisible)
 	}	
 }
 
-void CefControl::Paint(IRenderContext* pRender, const UiRect& rcPaint)
+void CefControl::Paint(IRenderContext* pRender, const CRect& rcPaint)
 {
 	__super::Paint(pRender, rcPaint);
 

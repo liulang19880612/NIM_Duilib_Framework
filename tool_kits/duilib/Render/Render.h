@@ -21,8 +21,8 @@ public:
 	virtual BYTE* GetBits() override;
 	virtual int	GetWidth() override;
 	virtual int GetHeight() override;
-	virtual void ClearAlpha(const UiRect& rcDirty, int alpha = 0) override;
-	virtual void RestoreAlpha(const UiRect& rcDirty, const UiRect& rcShadowPadding = UiRect(), int alpha = 0) override;
+	virtual void ClearAlpha(const CRect& rcDirty, int alpha = 0) override;
+	virtual void RestoreAlpha(const CRect& rcDirty, const CRect& rcShadowPadding = CRect(), int alpha = 0) override;
 
 	virtual bool IsRenderTransparent() const override;
 	virtual bool SetRenderTransparent(bool bTransparent) override;
@@ -34,29 +34,29 @@ public:
 	virtual CPoint SetWindowOrg(CPoint ptOffset) override;
 	virtual CPoint GetWindowOrg() const override;
 
-	virtual void SetClip(const UiRect& rc) override;
-	virtual void SetRoundClip(const UiRect& rc, int width, int height) override;
+	virtual void SetClip(const CRect& rc) override;
+	virtual void SetRoundClip(const CRect& rc, int width, int height) override;
 	virtual void ClearClip() override;
 
 	virtual HRESULT BitBlt(int x, int y, int cx, int cy, HDC hdcSrc, int xSrc = 0, int yScr = 0, DWORD rop = SRCCOPY) override;
 	virtual bool AlphaBlend(int xDest, int yDest, int widthDest, int heightDest, HDC hdcSrc, int xSrc, int yScr, int widthSrc, int heightSrc, BYTE uFade = 255) override;
 
-	virtual void DrawImage(const UiRect& rcPaint, HBITMAP hBitmap, bool bAlphaChannel,
-		const UiRect& rcImageDest, const UiRect& rcImageSource, const UiRect& rcCorners, BYTE uFade = 255, bool xtiled = false, bool ytiled = false) override;
+	virtual void DrawImage(const CRect& rcPaint, HBITMAP hBitmap, bool bAlphaChannel,
+		const CRect& rcImageDest, const CRect& rcImageSource, const CRect& rcCorners, BYTE uFade = 255, bool xtiled = false, bool ytiled = false) override;
 
-	virtual void DrawColor(const UiRect& rc, DWORD dwColor, BYTE uFade = 255) override;
-	virtual void DrawColor(const UiRect& rc, const std::wstring& colorStr, BYTE uFade = 255) override;
+	virtual void DrawColor(const CRect& rc, DWORD dwColor, BYTE uFade = 255) override;
+	virtual void DrawColor(const CRect& rc, const std::wstring& colorStr, BYTE uFade = 255) override;
 
-	virtual void DrawLine(const UiRect& rc, int nSize, DWORD dwPenColor) override;
+	virtual void DrawLine(const CRect& rc, int nSize, DWORD dwPenColor) override;
 	virtual void DrawLine(const IPen* pen, int x1, int y1, int x2, int y2) override;
 	virtual void DrawBezier(const IPen* pen, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) override;
-	virtual void DrawRect(const UiRect& rc, int nSize, DWORD dwPenColor) override;
-	virtual void DrawText(const UiRect& rc, const std::wstring& strText, DWORD dwTextColor, int iFont, UINT uStyle, BYTE uFade = 255, bool bLineLimit = false) override;
+	virtual void DrawRect(const CRect& rc, int nSize, DWORD dwPenColor) override;
+	virtual void DrawText(const CRect& rc, const std::wstring& strText, DWORD dwTextColor, int iFont, UINT uStyle, BYTE uFade = 255, bool bLineLimit = false) override;
 
-	virtual void DrawEllipse(const UiRect& rc, int nSize, DWORD dwColor) override;
-	virtual void FillEllipse(const UiRect& rc, DWORD dwColor) override;
+	virtual void DrawEllipse(const CRect& rc, int nSize, DWORD dwColor) override;
+	virtual void FillEllipse(const CRect& rc, DWORD dwColor) override;
 
-	virtual UiRect MeasureText(const std::wstring& strText, int iFont, UINT uStyle, int width = DUI_NOSET_VALUE) override;
+	virtual CRect MeasureText(const std::wstring& strText, int iFont, UINT uStyle, int width = DUI_NOSET_VALUE) override;
 
 	virtual void DrawPath(const IPath* path, const IPen* pen) override;
 	virtual void FillPath(const IPath* path, const IBrush* brush) override;

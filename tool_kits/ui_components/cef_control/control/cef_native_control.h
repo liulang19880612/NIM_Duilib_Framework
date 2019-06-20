@@ -17,7 +17,7 @@ public:
 	~CefNativeControl(void);	
 
 	virtual void Init() override;
-	virtual void SetPos(UiRect rc) override;
+	virtual void SetPos(CRect rc) override;
 	virtual void HandleMessage(EventArgs& event) override;
 	virtual void SetVisible(bool bVisible = true) override;
 	virtual void SetInternVisible(bool bVisible = true) override;

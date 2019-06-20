@@ -79,7 +79,7 @@ void Path_Gdiplus::AddRect(int left, int top, int right, int bottom)
 	path_->AddRectangle(Rect(left, top, right -left, bottom - top));
 }
 
-void Path_Gdiplus::AddRect(const UiRect& rect)
+void Path_Gdiplus::AddRect(const CRect& rect)
 {
 	path_->AddRectangle(Rect(rect.left, rect.top, rect.GetWidth(), rect.GetHeight()));
 }
@@ -89,7 +89,7 @@ void Path_Gdiplus::AddEllipse(int left, int top, int right, int bottom)
 	path_->AddEllipse(Rect(left, top, right - left, bottom - top));
 }
 
-void Path_Gdiplus::AddEllipse(const UiRect& rect)
+void Path_Gdiplus::AddEllipse(const CRect& rect)
 {
 	path_->AddEllipse(Rect(rect.left, rect.top, rect.GetWidth(), rect.GetHeight()));
 }
@@ -114,12 +114,12 @@ void Path_Gdiplus::AddPolygon(const CPoint* points, int count)
 	path_->AddPolygon(&p[0], p.size());
 }
 
-ui::UiRect Path_Gdiplus::GetBound(const IPen* pen)
+ui::CRect Path_Gdiplus::GetBound(const IPen* pen)
 {
 	auto p = (Pen_GdiPlus*)(pen);
 	Rect rc;
 	path_->GetBounds(&rc, NULL, p ? p->GetPen() : NULL);
-	return UiRect(rc.X, rc.Y, rc.GetRight(), rc.GetBottom());
+	return CRect(rc.X, rc.Y, rc.GetRight(), rc.GetBottom());
 }
 
 bool Path_Gdiplus::IsContainsPoint(int x, int y)

@@ -130,7 +130,7 @@ public:
 	 * @param[in] rc 窗口大小
 	 * @return 返回窗口句柄
 	 */
-	virtual HWND Create(HWND hwndParent, LPCTSTR pstrName, DWORD dwStyle, DWORD dwExStyle, bool isLayeredWindow = true, const UiRect& rc = UiRect(0, 0, 0, 0));
+	virtual HWND Create(HWND hwndParent, LPCTSTR pstrName, DWORD dwStyle, DWORD dwExStyle, bool isLayeredWindow = true, const CRect& rc = CRect(0, 0, 0, 0));
 
 	/**
 	 * @brief 关闭窗口
@@ -353,27 +353,27 @@ public:
 	 * @brief 获取窗口四边可拉伸范围的大小
 	 * @return 返回窗口四边可拉伸范围的大小
 	 */
-	UiRect GetSizeBox();
+	CRect GetSizeBox();
 
 	/**
 	 * @brief 设置窗口四边可拉伸范围的大小
 	 * @param[in] rcSizeBox 要设置的大小
 	 * @return 无
 	 */
-	void SetSizeBox(const UiRect& rcSizeBox);
+	void SetSizeBox(const CRect& rcSizeBox);
 
 	/**
 	 * @brief 获取窗口标题栏区域（可拖动区域），对应 XML 中 caption 属性
 	 * @return 返回标题栏区域
 	 */
-	UiRect GetCaptionRect() const;
+	CRect GetCaptionRect() const;
 
 	/**
 	 * @brief 设置窗口标题栏区域
 	 * @param[in] rcCaption 要设置的区域范围
 	 * @return 无
 	 */
-	void SetCaptionRect(UiRect& rcCaption);
+	void SetCaptionRect(CRect& rcCaption);
 
 	/**
 	 * @brief 获取窗口圆角大小，对应 XML 中 roundcorner 属性
@@ -393,27 +393,27 @@ public:
 	 * @brief 获取窗口最大化信息
 	 * @return 返回窗口最大化信息
 	 */
-	UiRect GetMaximizeInfo() const;
+	CRect GetMaximizeInfo() const;
 
 	/**
 	 * @brief 设置窗口最大化信息
 	 * @param[in] rcMaximize 要设置的最大化数值
 	 * @return 无
 	 */
-	void SetMaximizeInfo(UiRect& rcMaximize);
+	void SetMaximizeInfo(CRect& rcMaximize);
 
 	/**
 	 * @brief 获取透明通道修补范围的的九宫格描述，对应 XML 中 alphafixcorner 属性
 	 * @return 返回修补范围
 	 */
-	UiRect GetAlphaFixCorner() const;
+	CRect GetAlphaFixCorner() const;
 
 	/**
 	 * @brief 设置透明通道修补范围的的九宫格描述
 	 * @param[in] rc 要设置的修补范围
 	 * @return 无
 	 */
-	void SetAlphaFixCorner(UiRect& rc);
+	void SetAlphaFixCorner(CRect& rc);
 
 	/**
 	 * @brief 获取窗口的初始高度占屏幕高度的百分比，对应 XML 中 heightpercent 属性
@@ -460,21 +460,21 @@ public:
 	 * @brief 获取阴影的九宫格描述信息
 	 * @return 返回阴影的九宫格描述信息
 	 */
-	UiRect GetShadowCorner() const;
+	CRect GetShadowCorner() const;
 
 	/**
 	 * @brief 指定阴影素材的九宫格描述
 	 * @param[in] rect 九宫格描述信息
 	 * @return 无
 	 */
-	void SetShadowCorner(const UiRect rect);
+	void SetShadowCorner(const CRect rect);
 
 	/**
 	 * @brief 获取窗口位置信息
 	 * @param[in] bContainShadow 是否包含阴影，true 为包含，默认为 false 不包含
 	 * @return 返回窗口位置信息
 	 */
-	UiRect GetPos(bool bContainShadow = false) const;
+	CRect GetPos(bool bContainShadow = false) const;
 
 	/**
 	 * @brief 设置窗口位置（对 SetWindowPos 的一层封装）
@@ -485,7 +485,7 @@ public:
 	 * @param[in] bContainShadow 是否包含阴影范围，默认为 false
 	 * @return 无
 	 */
-	void SetPos(const UiRect& rc, bool bNeedDpiScale, UINT uFlags, HWND hWndInsertAfter = NULL, bool bContainShadow = false);
+	void SetPos(const CRect& rc, bool bNeedDpiScale, UINT uFlags, HWND hWndInsertAfter = NULL, bool bContainShadow = false);
 
 	/**
 	 * @brief 获取窗口最小范围，对应 XML 中 mininfo 属性
@@ -839,7 +839,7 @@ public:
 	 * @param[in] rcItem 重绘范围
 	 * @return 无
 	 */
-	void Invalidate(const UiRect& rcItem);
+	void Invalidate(const CRect& rcItem);
 
 	/**
 	 * @brief 绘制函数体
@@ -918,11 +918,11 @@ protected:
 	CSize m_szMinWindow;
 	CSize m_szMaxWindow;
 	CSize m_szInitWindowSize;
-	UiRect m_rcMaximizeInfo;
-	UiRect m_rcSizeBox;
-	UiRect m_rcAlphaFix;
+	CRect m_rcMaximizeInfo;
+	CRect m_rcSizeBox;
+	CRect m_rcAlphaFix;
 	CSize m_szRoundCorner;
-	UiRect m_rcCaption;
+	CRect m_rcCaption;
 	double m_heightPercent;
 
 	HDC m_hDcPaint;

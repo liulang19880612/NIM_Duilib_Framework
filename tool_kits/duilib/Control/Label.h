@@ -69,14 +69,14 @@ public:
 	 * @brief 获取文字边距
 	 * @return 返回文字的边距信息
 	 */
-	UiRect GetTextPadding() const;
+	CRect GetTextPadding() const;
 
 	/**
 	 * @brief 设置文字边距信息
 	 * @param[in] rc 边距信息
 	 * @return 无
 	 */
-	void SetTextPadding(UiRect rc);
+	void SetTextPadding(CRect rc);
 
 	/**
 	 * @brief 判断是否是单行模式
@@ -111,7 +111,7 @@ protected:
 	bool    m_bLineLimit;
 	int		m_hAlign;
 	int		m_vAlign;
-	UiRect	m_rcTextPadding;
+	CRect	m_rcTextPadding;
 	std::wstring	m_sText;
 	std::wstring	m_sTextId;
 	StateColorMap	m_textColorMap;

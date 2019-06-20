@@ -12,7 +12,7 @@ GdiClip::~GdiClip()
 
 }
 
-void GdiClip::CreateClip(HDC hDC, UiRect rcItem)
+void GdiClip::CreateClip(HDC hDC, CRect rcItem)
 {
 	if (hDC != NULL) {
 		CPoint ptWinOrg;
@@ -26,7 +26,7 @@ void GdiClip::CreateClip(HDC hDC, UiRect rcItem)
 	}
 }
 
-void GdiClip::CreateRoundClip(HDC hDC, UiRect rcItem, int width, int height)
+void GdiClip::CreateRoundClip(HDC hDC, CRect rcItem, int width, int height)
 {
 	if (hDC != NULL) {
 		CPoint ptWinOrg;

@@ -67,10 +67,10 @@ LRESULT Toast::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 		POINT pt;
 		GetCursorPos(&pt);
 		ScreenToClient(m_hWnd, &pt);
-		UiRect client_rect;
+		CRect client_rect;
 		::GetClientRect(m_hWnd, &client_rect);
 		// leave消息触发时，获取的鼠标坐标有可能还在client_rect范围内，会偏差1像素，这里缩减1像素
-		client_rect.Deflate(UiRect(1, 1, 1, 1));
+		client_rect.Deflate(CRect(1, 1, 1, 1));
 		if (NULL != close_button_ && !client_rect.IsPointIn(pt))
 			close_button_->SetVisible(false);
 	}

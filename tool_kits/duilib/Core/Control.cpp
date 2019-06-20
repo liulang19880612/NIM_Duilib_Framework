@@ -261,7 +261,7 @@ void Control::SetBorderColor(const std::wstring& strBorderColor)
     Invalidate();
 }
 
-void Control::SetBorderSize(UiRect rc)
+void Control::SetBorderSize(CRect rc)
 {
 	DpiManager::GetInstance()->ScaleRect(rc);
 	m_rcBorderSize = rc;
@@ -565,18 +565,18 @@ Control* Control::FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags, C
     return Proc(this, pData);
 }
 
-UiRect Control::GetPos(bool bContainShadow) const
+CRect Control::GetPos(bool bContainShadow) const
 {
-	UiRect pos = m_rcItem;
+	CRect pos = m_rcItem;
 	if (m_pWindow && !bContainShadow) {
-		UiRect shadowLength = m_pWindow->GetShadowCorner();
+		CRect shadowLength = m_pWindow->GetShadowCorner();
 		pos.Offset(-shadowLength.left, -shadowLength.top);
 	}
 
 	return pos;
 }
 
-void Control::SetPos(UiRect rc)
+void Control::SetPos(CRect rc)
 {
 	if (rc.right < rc.left) rc.right = rc.left;
 	if (rc.bottom < rc.top) rc.bottom = rc.top;
@@ -586,7 +586,7 @@ void Control::SetPos(UiRect rc)
 		return;
 	}
 
-	UiRect invalidateRc = m_rcItem;
+	CRect invalidateRc = m_rcItem;
 	if (::IsRectEmpty(&invalidateRc)) invalidateRc = rc;
 
 	m_rcItem = rc;
@@ -602,8 +602,8 @@ void Control::SetPos(UiRect rc)
 	invalidateRc.Union(m_rcItem);
 
 	Control* pParent = this;
-	UiRect rcTemp;
-	UiRect rcParent;
+	CRect rcTemp;
+	CRect rcParent;
 	CPoint offset = GetScrollOffset();
 	invalidateRc.Offset(-offset.x, -offset.y);
 	while ((pParent = pParent->GetParent()) != nullptr)
@@ -617,12 +617,12 @@ void Control::SetPos(UiRect rc)
 	m_pWindow->Invalidate(invalidateRc);
 }
 
-UiRect Control::GetMargin() const
+CRect Control::GetMargin() const
 {
 	return m_rcMargin;
 }
 
-void Control::SetMargin(UiRect rcMargin, bool bNeedDpiScale)
+void Control::SetMargin(CRect rcMargin, bool bNeedDpiScale)
 {
 	if (bNeedDpiScale)
 		DpiManager::GetInstance()->ScaleRect(rcMargin);
@@ -965,7 +965,7 @@ void Control::SetAttribute(const std::wstring& strName, const std::wstring& strV
 		}
 	}
 	else if( strName == _T("margin") ) {
-        UiRect rcMargin;
+        CRect rcMargin;
         LPTSTR pstr = NULL;
         rcMargin.left = _tcstol(strValue.c_str(), &pstr, 10);  ASSERT(pstr);    
         rcMargin.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
@@ -982,11 +982,11 @@ void Control::SetAttribute(const std::wstring& strName, const std::wstring& strV
 		std::wstring nValue = strValue;
 		if (nValue.find(',') == std::wstring::npos) {
 			SetBorderSize(_ttoi(strValue.c_str()));
-			UiRect rcBorder;
+			CRect rcBorder;
 			SetBorderSize(rcBorder);
 		}
 		else {
-			UiRect rcBorder;
+			CRect rcBorder;
 			LPTSTR pstr = NULL;
 			rcBorder.left = _tcstol(strValue.c_str(), &pstr, 10);  ASSERT(pstr);
 			rcBorder.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
@@ -1232,7 +1232,7 @@ bool Control::DrawImage(IRenderContext* pRender, Image& duiImage, const std::wst
 	if (!strModify.empty()) {
 		ImageAttribute::ModifyAttribute(newImageAttribute, strModify);
 	}
-	UiRect rcNewDest = m_rcItem;
+	CRect rcNewDest = m_rcItem;
 	if (newImageAttribute.rcDest.left != DUI_NOSET_VALUE && newImageAttribute.rcDest.top != DUI_NOSET_VALUE
 		&& newImageAttribute.rcDest.right != DUI_NOSET_VALUE && newImageAttribute.rcDest.bottom != DUI_NOSET_VALUE) {
 		rcNewDest.left = m_rcItem.left + newImageAttribute.rcDest.left;
@@ -1240,7 +1240,7 @@ bool Control::DrawImage(IRenderContext* pRender, Image& duiImage, const std::wst
 		rcNewDest.top = m_rcItem.top + newImageAttribute.rcDest.top;
 		rcNewDest.bottom = m_rcItem.top + newImageAttribute.rcDest.bottom;
 	}
-	UiRect rcNewSource = newImageAttribute.rcSource;
+	CRect rcNewSource = newImageAttribute.rcSource;
 	if (rcNewSource.left == DUI_NOSET_VALUE || rcNewSource.top == DUI_NOSET_VALUE
 		|| rcNewSource.right == DUI_NOSET_VALUE || rcNewSource.bottom == DUI_NOSET_VALUE) {
 		rcNewSource.left = 0;
@@ -1278,13 +1278,13 @@ void Control::ClearRenderContext()
 	}
 }
 
-void Control::AlphaPaint(IRenderContext* pRender, const UiRect& rcPaint)
+void Control::AlphaPaint(IRenderContext* pRender, const CRect& rcPaint)
 {
 	if (m_nAlpha == 0) {
 		return;
 	}
 
-	UiRect rcUnion;
+	CRect rcUnion;
 	if( !::IntersectRect(&rcUnion, &rcPaint, &m_rcItem) ) return;
 
 	bool bRoundClip = false;
@@ -1305,7 +1305,7 @@ void Control::AlphaPaint(IRenderContext* pRender, const UiRect& rcPaint)
 			// IsCacheDirty与m_bCacheDirty意义不一样
 			if (m_bCacheDirty) {
 				pCacheRender->Clear();
-				UiRect rcClip = { 0, 0, size.cx, size.cy };
+				CRect rcClip = { 0, 0, size.cx, size.cy };
 				AutoClip alphaClip(pCacheRender, rcClip, m_bClip);
 				AutoClip roundAlphaClip(pCacheRender, rcClip, m_cxyBorderRound.cx, m_cxyBorderRound.cy, bRoundClip);
 
@@ -1337,7 +1337,7 @@ void Control::AlphaPaint(IRenderContext* pRender, const UiRect& rcPaint)
 
 			if (IsCacheDirty()) {
 				pCacheRender->Clear();
-				UiRect rcClip = { 0, 0, size.cx, size.cy };
+				CRect rcClip = { 0, 0, size.cx, size.cy };
 				AutoClip alphaClip(pCacheRender, rcClip, m_bClip);
 				AutoClip roundAlphaClip(pCacheRender, rcClip, m_cxyBorderRound.cx, m_cxyBorderRound.cy, bRoundClip);
 
@@ -1365,7 +1365,7 @@ void Control::AlphaPaint(IRenderContext* pRender, const UiRect& rcPaint)
 	}
 }
 
-void Control::Paint(IRenderContext* pRender, const UiRect& rcPaint)
+void Control::Paint(IRenderContext* pRender, const CRect& rcPaint)
 {
     if( !::IntersectRect(&m_rcPaint, &rcPaint, &m_rcItem) ) return;
 
@@ -1423,7 +1423,7 @@ void Control::PaintBorder(IRenderContext* pRender)
 
 	if(dwBorderColor != 0) {
 		if(m_rcBorderSize.left > 0 || m_rcBorderSize.top > 0 || m_rcBorderSize.right > 0 || m_rcBorderSize.bottom > 0) {
-			UiRect rcBorder;
+			CRect rcBorder;
 			if(m_rcBorderSize.left > 0) {
 				rcBorder = m_rcItem;
 				rcBorder.right = rcBorder.left = m_rcItem.left + m_rcBorderSize.left / 2;
@@ -1458,7 +1458,7 @@ void Control::PaintBorder(IRenderContext* pRender)
 			}
 		}
 		else if(m_nBorderSize > 0) {
-			UiRect rcDraw = m_rcItem;
+			CRect rcDraw = m_rcItem;
 			int nDeltaValue = m_nBorderSize / 2;
 			rcDraw.top += nDeltaValue;
 			rcDraw.bottom -= nDeltaValue;

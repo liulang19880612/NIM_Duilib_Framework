@@ -147,7 +147,7 @@ void MultiBrowserManager::SetEnableMerge(bool enable)
 
 		// 给新拆分的窗口设置坐标
 		bool first_sort = true;
-		ui::UiRect rect_old_form;
+		ui::CRect rect_old_form;
 		MultiBrowserForm *sort_form = NULL;
 
 		// 遍历所有浏览器盒子，脱离原浏览器窗口，创建新的浏览器窗口并附加浏览器盒子
@@ -378,7 +378,7 @@ void MultiBrowserManager::OnAfterDragBorwserBox()
 						// 这里设置新浏览器窗口的位置，设置到偏移鼠标坐标100,20的位置
 						POINT pt_mouse;
 						::GetCursorPos(&pt_mouse);
-						ui::UiRect rect(pt_mouse.x + kDragFormXOffset, pt_mouse.y + kDragFormYOffset, 0, 0);
+						ui::CRect rect(pt_mouse.x + kDragFormXOffset, pt_mouse.y + kDragFormYOffset, 0, 0);
 						browser_form->SetPos(rect, false, SWP_NOSIZE);
 					}
 				}

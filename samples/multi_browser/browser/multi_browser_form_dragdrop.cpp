@@ -203,7 +203,7 @@ bool MultiBrowserForm::OnProcessTabItemDrag(ui::EventArgs* param)
 	return true;
 }
 
-HBITMAP MultiBrowserForm::GenerateBoxOffsetRenderBitmap(const UiRect &src_rect)
+HBITMAP MultiBrowserForm::GenerateBoxOffsetRenderBitmap(const CRect &src_rect)
 {
 	ASSERT(!src_rect.IsRectEmpty());
 	int src_width = src_rect.right - src_rect.left;
@@ -240,7 +240,7 @@ HBITMAP MultiBrowserForm::GenerateBoxWindowBitmap()
 		return NULL;
 
 	HWND cef_window = active_browser_box_->GetCefControl()->GetCefHandle();
-	UiRect src_rect;
+	CRect src_rect;
 	GetClientRect(cef_window, &src_rect);
 
 	int src_width = src_rect.right - src_rect.left;

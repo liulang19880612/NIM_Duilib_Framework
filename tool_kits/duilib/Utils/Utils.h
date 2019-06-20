@@ -108,15 +108,15 @@ public:
 /////////////////////////////////////////////////////////////////////////////////////
 //
 
-class UILIB_API UiRect : public tagRECT
+class UILIB_API CRect : public tagRECT
 {
 public:
-	UiRect()
+	CRect()
 	{
 		left = top = right = bottom = 0;
 	}
 
-	UiRect(const RECT& src)
+	CRect(const RECT& src)
 	{
 		left = src.left;
 		top = src.top;
@@ -124,7 +124,7 @@ public:
 		bottom = src.bottom;
 	}
 
-	UiRect(int iLeft, int iTop, int iRight, int iBottom)
+	CRect(int iLeft, int iTop, int iRight, int iBottom)
 	{
 		left = iLeft;
 		top = iTop;
@@ -178,7 +178,7 @@ public:
 		::InflateRect(this, cx, cy);
 	}
 
-	void Inflate(const UiRect& rect)
+	void Inflate(const CRect& rect)
 	{
 		this->left -= rect.left;
 		this->top -= rect.top;
@@ -191,7 +191,7 @@ public:
 		::InflateRect(this, -cx, -cy);
 	}
 
-	void Deflate(const UiRect& rect)
+	void Deflate(const CRect& rect)
 	{
 		this->left += rect.left;
 		this->top += rect.top;
@@ -199,17 +199,17 @@ public:
 		this->bottom -= rect.bottom;
 	}
 
-	void Union(const UiRect& rc)
+	void Union(const CRect& rc)
 	{
 		::UnionRect(this, this, &rc);
 	}
 
-	void Intersect(const UiRect& rc)
+	void Intersect(const CRect& rc)
 	{
 		::IntersectRect(this, this, &rc);
 	}
 
-	void Subtract(const UiRect& rc)
+	void Subtract(const CRect& rc)
 	{
 		::SubtractRect(this, this, &rc);
 	}
@@ -219,7 +219,7 @@ public:
 		return ::PtInRect(this, point) == TRUE;
 	}
 
-	bool Equal(const UiRect& rect) const
+	bool Equal(const CRect& rect) const
 	{
 		return this->left == rect.left && this->top == rect.top 
 			&& this->right == rect.right && this->bottom == rect.bottom;

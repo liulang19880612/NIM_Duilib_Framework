@@ -9,7 +9,7 @@ HLayout::HLayout()
 
 }
 
-CSize HLayout::ArrangeChild(const std::vector<Control*>& items, UiRect rc)
+CSize HLayout::ArrangeChild(const std::vector<Control*>& items, CRect rc)
 {
 	// Determine the width of elements that are sizeable
 	CSize szAvailable(rc.right - rc.left, rc.bottom - rc.top);
@@ -57,7 +57,7 @@ CSize HLayout::ArrangeChild(const std::vector<Control*>& items, UiRect rc)
 			continue;
 		}
 
-		UiRect rcMargin = pControl->GetMargin();
+		CRect rcMargin = pControl->GetMargin();
 		szRemaining.cx -= rcMargin.left;
 		CSize sz = pControl->EstimateSize(szRemaining);
 		if( sz.cx == DUI_LENGTH_STRETCH ) {
@@ -92,7 +92,7 @@ CSize HLayout::ArrangeChild(const std::vector<Control*>& items, UiRect rc)
 			childBottm = childTop + sz.cy;
 		}
 
-		UiRect rcChildPos(iPosX + rcMargin.left, childTop, iPosX + rcMargin.left + sz.cx, childBottm);
+		CRect rcChildPos(iPosX + rcMargin.left, childTop, iPosX + rcMargin.left + sz.cx, childBottm);
 		max_height = MAX(max_height, rcChildPos.GetHeight());
 		pControl->SetPos(rcChildPos);
 		iPosX += sz.cx + m_iChildMargin + rcMargin.left + rcMargin.right;

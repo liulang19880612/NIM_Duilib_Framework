@@ -25,7 +25,7 @@ public:
 	 * @return HWND 窗口句柄
 	 */
 	virtual HWND Create(HWND hwndParent, LPCTSTR pstrName, DWORD dwStyle, DWORD dwExStyle,
-		bool isLayeredWindow = true, const ui::UiRect& rc = ui::UiRect(0, 0, 0, 0)) override;
+		bool isLayeredWindow = true, const ui::CRect& rc = ui::CRect(0, 0, 0, 0)) override;
 
 	/**
 	 * 处理窗口被销毁的消息

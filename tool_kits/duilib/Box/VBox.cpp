@@ -9,7 +9,7 @@ VLayout::VLayout()
 
 }
 
-CSize VLayout::ArrangeChild(const std::vector<Control*>& items, UiRect rc)
+CSize VLayout::ArrangeChild(const std::vector<Control*>& items, CRect rc)
 {
 	// Determine the minimum size
 	CSize szAvailable(rc.right - rc.left, rc.bottom - rc.top);
@@ -57,7 +57,7 @@ CSize VLayout::ArrangeChild(const std::vector<Control*>& items, UiRect rc)
 			continue;
 		}
 
-		UiRect rcMargin = pControl->GetMargin();
+		CRect rcMargin = pControl->GetMargin();
 		szRemaining.cy -= rcMargin.top;
 		CSize sz = pControl->EstimateSize(szRemaining);
 		if( sz.cy == DUI_LENGTH_STRETCH ) {
@@ -92,7 +92,7 @@ CSize VLayout::ArrangeChild(const std::vector<Control*>& items, UiRect rc)
 			childRight = childLeft + sz.cx;
 		}
 
-		UiRect rcCtrl(childLeft, iPosY + rcMargin.top, childRight, iPosY + rcMargin.top + sz.cy);
+		CRect rcCtrl(childLeft, iPosY + rcMargin.top, childRight, iPosY + rcMargin.top + sz.cy);
 		max_width = MAX(max_width, rcCtrl.GetWidth());
 		pControl->SetPos(rcCtrl);
 
@@ -102,8 +102,7 @@ CSize VLayout::ArrangeChild(const std::vector<Control*>& items, UiRect rc)
 	}
 	cyNeeded += (nEstimateNum - 1) * m_iChildMargin;
 
-	CSize size(max_width, cyNeeded);
-	return size;
+	return CSize(max_width, cyNeeded);
 }
 
 CSize VLayout::AjustSizeByChild(const std::vector<Control*>& items, CSize szAvailable)
@@ -111,21 +110,22 @@ CSize VLayout::AjustSizeByChild(const std::vector<Control*>& items, CSize szAvai
 	CSize totalSize;
 	CSize itemSize;
 	Control* pChildControl = NULL;
-	int count = (int)items.size();
 	int estimateChildCount = 0;
-	for(int it = 0; it < count; it++) 
+
+	for (size_t it = 0; it < items.size(); it++)
 	{
 		pChildControl = (Control*)items[it];
 		if (!pChildControl->IsVisible() || pChildControl->IsFloat()) {
 			continue;
 		}
-
 		estimateChildCount++;
 		itemSize = pChildControl->EstimateSize(szAvailable);
+		
 		if( itemSize.cx < pChildControl->GetMinWidth() ) itemSize.cx = pChildControl->GetMinWidth();
 		if( pChildControl->GetMaxWidth() >= 0 && itemSize.cx > pChildControl->GetMaxWidth() ) itemSize.cx = pChildControl->GetMaxWidth();
 		if( itemSize.cy < pChildControl->GetMinHeight() ) itemSize.cy = pChildControl->GetMinHeight();
 		if( itemSize.cy > pChildControl->GetMaxHeight() ) itemSize.cy = pChildControl->GetMaxHeight();
+		
 		totalSize.cx = MAX(itemSize.cx + pChildControl->GetMargin().left + pChildControl->GetMargin().right, totalSize.cx);
 		totalSize.cy += itemSize.cy + pChildControl->GetMargin().top + pChildControl->GetMargin().bottom;
 	}
@@ -134,7 +134,7 @@ CSize VLayout::AjustSizeByChild(const std::vector<Control*>& items, CSize szAvai
 		totalSize.cy += (estimateChildCount - 1) * m_iChildMargin;
 	}
 	totalSize.cx += m_rcPadding.left + m_rcPadding.right;
-	totalSize.cy += m_rcPadding.top + m_rcPadding.bottom;
+	totalSize.cy += m_rcPadding.top  + m_rcPadding.bottom;
 	return totalSize;
 }
 

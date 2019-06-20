@@ -100,7 +100,7 @@ public:
 	* @param[in] rc 要设置的控件的位置
 	* @return void	无返回值
 	*/
-	virtual void SetPos(ui::UiRect rc) override;
+	virtual void SetPos(ui::CRect rc) override;
 
 private:
 	void OnBeforeMenu(CefRefPtr<CefContextMenuParams> params, CefRefPtr<CefMenuModel> model);

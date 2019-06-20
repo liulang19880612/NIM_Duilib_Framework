@@ -125,13 +125,13 @@ LRESULT WindowImplBase::OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam, BOO
 	POINT pt; pt.x = GET_X_LPARAM(lParam); pt.y = GET_Y_LPARAM(lParam);
 	::ScreenToClient(GetHWND(), &pt);
 
-	UiRect rcClient;
+	CRect rcClient;
 	::GetClientRect(GetHWND(), &rcClient);
 	
 	rcClient.Deflate(m_shadow.GetShadowCorner());
 	
 	if( !::IsZoomed(GetHWND()) ) {
-		UiRect rcSizeBox = GetSizeBox();
+		CRect rcSizeBox = GetSizeBox();
 		if( pt.y < rcClient.top + rcSizeBox.top ) {
 			if (pt.y >= rcClient.top) {
 				if (pt.x < (rcClient.left + rcSizeBox.left) && pt.x >= rcClient.left) return HTTOPLEFT;
@@ -159,7 +159,7 @@ LRESULT WindowImplBase::OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam, BOO
 		}
 	}
 
-	UiRect rcCaption = GetCaptionRect();
+	CRect rcCaption = GetCaptionRect();
 	if( pt.x >= rcClient.left + rcCaption.left && pt.x < rcClient.right - rcCaption.right \
 		&& pt.y >= rcClient.top + rcCaption.top && pt.y < rcClient.top + rcCaption.bottom ) {
 			Control* pControl = FindControl(pt);
@@ -180,11 +180,11 @@ LRESULT WindowImplBase::OnGetMinMaxInfo(UINT uMsg, WPARAM wParam, LPARAM lParam,
 	MONITORINFO oMonitor = {};
 	oMonitor.cbSize = sizeof(oMonitor);
 	::GetMonitorInfo(::MonitorFromWindow(GetHWND(), MONITOR_DEFAULTTONEAREST), &oMonitor);
-	UiRect rcWork = oMonitor.rcWork;
-	UiRect rcMonitor = oMonitor.rcMonitor;
+	CRect rcWork = oMonitor.rcWork;
+	CRect rcMonitor = oMonitor.rcMonitor;
 	rcWork.Offset(-oMonitor.rcMonitor.left, -oMonitor.rcMonitor.top);
 
-	UiRect rcMaximize = GetMaximizeInfo();
+	CRect rcMaximize = GetMaximizeInfo();
 	if (rcMaximize.GetWidth() > 0 && rcMaximize.GetHeight() > 0) {
 		lpMMI->ptMaxPosition.x	= rcWork.left + rcMaximize.left;
 		lpMMI->ptMaxPosition.y	= rcWork.top + rcMaximize.top;
@@ -247,7 +247,7 @@ LRESULT WindowImplBase::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bH
 {
 	CSize szRoundCorner = GetRoundCorner();
 	if( !::IsIconic(GetHWND()) && (szRoundCorner.cx != 0 || szRoundCorner.cy != 0) ) {
-		UiRect rcWnd;
+		CRect rcWnd;
 		::GetWindowRect(GetHWND(), &rcWnd);
 		rcWnd.Offset(-rcWnd.left, -rcWnd.top);
 		rcWnd.right++; rcWnd.bottom++;

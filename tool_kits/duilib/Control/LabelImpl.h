@@ -107,7 +107,7 @@ CSize LabelTemplate<InheritType>::EstimateText(CSize szAvailable, bool& bReEstim
 	CSize fixedSize;
 	if (!GetText().empty()) {
 		auto pRender = m_pWindow->GetRenderContext();
-		UiRect rect = pRender->MeasureText(GetText(), m_iFont, m_uTextStyle, width);
+		CRect rect = pRender->MeasureText(GetText(), m_iFont, m_uTextStyle, width);
 		if (GetFixedWidth() == DUI_LENGTH_AUTO) {
 			fixedSize.cx = rect.right - rect.left + m_rcTextPadding.left + m_rcTextPadding.right;
 		}
@@ -120,7 +120,7 @@ CSize LabelTemplate<InheritType>::EstimateText(CSize szAvailable, bool& bReEstim
 				int maxWidth = szAvailable.cx - m_rcTextPadding.left - m_rcTextPadding.right;
 				if (estimateWidth > maxWidth) {
 					estimateWidth = maxWidth;
-					UiRect newRect = pRender->MeasureText(GetText(), m_iFont, m_uTextStyle, estimateWidth);
+					CRect newRect = pRender->MeasureText(GetText(), m_iFont, m_uTextStyle, estimateWidth);
 					estimateHeight = newRect.bottom - newRect.top;
 				}
 			}
@@ -175,7 +175,7 @@ void LabelTemplate<InheritType>::SetAttribute(const std::wstring& strName, const
 	else if (strName == _T("pushedtextcolor"))	SetStateTextColor(kControlStatePushed, strValue);
 	else if (strName == _T("disabledtextcolor"))	SetStateTextColor(kControlStateDisabled, strValue);
 	else if (strName == _T("textpadding")) {
-		UiRect rcTextPadding;
+		CRect rcTextPadding;
 		LPTSTR pstr = NULL;
 		rcTextPadding.left = _tcstol(strValue.c_str(), &pstr, 10);  ASSERT(pstr);
 		rcTextPadding.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
@@ -190,7 +190,7 @@ template<typename InheritType>
 void LabelTemplate<InheritType>::PaintText(IRenderContext* pRender)
 {
 	if (GetText().empty()) return;
-	UiRect rc = m_rcItem;
+	CRect rc = m_rcItem;
 	rc.left += m_rcTextPadding.left;
 	rc.right -= m_rcTextPadding.right;
 	rc.top += m_rcTextPadding.top;
@@ -281,13 +281,13 @@ void LabelTemplate<InheritType>::SetFont(int index)
 }
 
 template<typename InheritType>
-UiRect LabelTemplate<InheritType>::GetTextPadding() const
+CRect LabelTemplate<InheritType>::GetTextPadding() const
 {
 	return m_rcTextPadding;
 }
 
 template<typename InheritType>
-void LabelTemplate<InheritType>::SetTextPadding(UiRect rc)
+void LabelTemplate<InheritType>::SetTextPadding(CRect rc)
 {
 	DpiManager::GetInstance()->ScaleRect(rc);
 	m_rcTextPadding = rc;

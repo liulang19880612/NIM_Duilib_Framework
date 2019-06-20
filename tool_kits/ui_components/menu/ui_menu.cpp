@@ -32,7 +32,7 @@ void CMenuWnd::Init(STRINGorID xml, LPCTSTR pSkinType, POINT point, PopupPosType
 
 	m_xml = xml;
 	no_focus_ = no_focus;
-	Create(m_hParent, L"NIM_DUILIB_MENU_WINDOW", WS_POPUP, WS_EX_TOOLWINDOW | WS_EX_TOPMOST, true, UiRect());
+	Create(m_hParent, L"NIM_DUILIB_MENU_WINDOW", WS_POPUP, WS_EX_TOOLWINDOW | WS_EX_TOPMOST, true, CRect());
 	// HACK: Don't deselect the parent's caption
 	HWND hWndParent = m_hWnd;
 	while (::GetParent(hWndParent) != NULL) hWndParent = ::GetParent(hWndParent);
@@ -69,8 +69,8 @@ void CMenuWnd::Show()
 	MONITORINFO oMonitor = {};
 	oMonitor.cbSize = sizeof(oMonitor);
 	::GetMonitorInfo(::MonitorFromWindow(m_hWnd, MONITOR_DEFAULTTOPRIMARY), &oMonitor);
-	UiRect rcWork = oMonitor.rcWork;
-	UiRect monitor_rect = oMonitor.rcMonitor;
+	CRect rcWork = oMonitor.rcWork;
+	CRect monitor_rect = oMonitor.rcMonitor;
 	ui::CSize szInit = { rcWork.right - rcWork.left, rcWork.bottom - rcWork.top };
 	szInit = GetRoot()->EstimateSize(szInit);
 	szInit.cx -= GetShadowCorner().left + GetShadowCorner().right;
@@ -93,7 +93,7 @@ void CMenuWnd::Show()
 	{
 		ASSERT(FALSE);
 	}
-	UiRect rc;
+	CRect rc;
 	rc.left = m_BasedPoint.x;
 	rc.top = m_BasedPoint.y;
 	if (rc.top < monitor_rect.top)

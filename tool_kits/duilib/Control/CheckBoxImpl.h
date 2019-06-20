@@ -101,7 +101,7 @@ void CheckBoxTemplate<InheritType>::PaintText(IRenderContext* pRender)
 	}
 
 	if( GetText().empty() ) return;
-	UiRect rc = m_rcItem;
+	CRect rc = m_rcItem;
 	rc.left += m_rcTextPadding.left;
 	rc.right -= m_rcTextPadding.right;
 	rc.top += m_rcTextPadding.top;

@@ -297,12 +297,12 @@ CSize PlaceHolder::EstimateSize(CSize szAvailable)
 	return m_cxyFixed;
 }
 
-UiRect PlaceHolder::GetPos(bool bContainShadow) const
+CRect PlaceHolder::GetPos(bool bContainShadow) const
 {
 	return m_rcItem;
 }
 
-void PlaceHolder::SetPos(UiRect rc)
+void PlaceHolder::SetPos(CRect rc)
 {
 	m_rcItem = rc;
 }
@@ -381,13 +381,13 @@ void PlaceHolder::Invalidate()
 	if (!IsVisible()) return;
 
 	SetCacheDirty(true);
-	UiRect rcInvalidate = GetPosWithScrollOffset();
+	CRect rcInvalidate = GetPosWithScrollOffset();
 	if (m_pWindow != NULL) m_pWindow->Invalidate(rcInvalidate);
 }
 
-UiRect PlaceHolder::GetPosWithScrollOffset() const
+CRect PlaceHolder::GetPosWithScrollOffset() const
 {
-	UiRect pos = GetPos();
+	CRect pos = GetPos();
 	CPoint offset = GetScrollOffset();
 	pos.Offset(-offset.x, -offset.y);
 	return pos;

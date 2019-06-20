@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Window size="800,600" caption="0,0,0,35">
-  <VBox bkcolor="bk_wnd_darkcolor">
-    <HBox width="stretch" height="35" bkcolor="bk_wnd_lightcolor">
-      <Control />
-      <Button class="btn_wnd_min" name="minbtn" margin="4,6,0,0"/>
-      <Box width="21" margin="4,6,0,0">
-        <Button class="btn_wnd_max" name="maxbtn"/>
-        <Button class="btn_wnd_restore" name="restorebtn" visible="false"/>
-      </Box>
-      <Button class="btn_wnd_close" name="closebtn" margin="4,6,8,0"/>
+<Window size="800,600" caption="0,0,0,110" >
+  <VBox  name="root" bkcolor="bk_wnd_darkcolor" >
+    <HBox name="caption" width="stretch" height="110" bkcolor="bk_wnd_lightcolor">
+	  <!--logo-->
+	  <VBox name="logo" width="200" height="stretch"> 
+		<VBox name="logobk" width="stretch" height="stretch" bkimage="Img\\logo\\logobk.png" valign="center" >
+			<Label name="logoImg" bkimage="Img\\logo\\logo.png" valign="center"  height="auto" margin="50,30"/>
+			<HBox name="mainmenu" valign="center"  margin="100,10">
+			   <Control />
+			   <Label name="current_main_menu" text="业务动态"  halign="right"/>
+			   <Button name="main_menu_select_trangle" bkimage="Img\\logo\\DropDown.png"  margin="0,3" halign="right" />
+			   <Control />
+			</HBox>
+		</VBox>
+      </VBox>
+	  <!--菜单区域-->
+	  <VBox width="200" height="auto"> 
+		<VBox width="auto" height="auto" bkimage="Img\\logo\\logo.png" valign="center" margin="8">
+			<HBox width="auto" height="auto"  >
+				<Label text="一级菜单" valign="center" margin="8"/>
+			</HBox>
+			<HBox width="auto" height="auto" >
+				<Label text="二级菜单" valign="center" margin="8"/>
+			</HBox>
+		</VBox>
+      </VBox>
+	  <!--功能按钮-->
+	   <VBox>
+	     <!--系统按钮-->
+		<HBox>
+			<Button class="btn_wnd_min" name="minbtn" margin="4,6,0,0"/>
+			<Box width="21" margin="4,6,0,0">
+				<Button class="btn_wnd_max" name="maxbtn"/>
+				<Button class="btn_wnd_restore" name="restorebtn" visible="false"/>
+			</Box>
+			<Button class="btn_wnd_close" name="closebtn" margin="4,6,8,0"/>
+		</HBox>
+		 <!--活动按钮-->
+		<HBox>
+				<Button class="btn_wnd_min" name="去村赛" margin="4,6,0,0"/>
+		</HBox>
+	  </VBox>
     </HBox>
     <Box>
       <VBox margin="0,0,0,0" valign="center" halign="center" width="auto" height="auto">

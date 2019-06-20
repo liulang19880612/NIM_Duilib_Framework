@@ -43,7 +43,7 @@ public:
 class UILIB_API VirtualLayout : public VLayout
 {
 protected:
-    virtual ui::CSize ArrangeChild(const std::vector<ui::Control*>& items, ui::UiRect rc);
+    virtual ui::CSize ArrangeChild(const std::vector<ui::Control*>& items, ui::CRect rc);
 };
 
 class UILIB_API VirtualListBox : public ListBox
@@ -111,7 +111,7 @@ protected:
 	/// 重写父类接口，提供个性化功能
 	virtual void SetScrollPos(ui::CSize szPos) override;
 	virtual void HandleMessage(ui::EventArgs& event) override;
-	virtual void SetPos(UiRect rc) override;
+	virtual void SetPos(CRect rc) override;
 
 	/**
 	 * @brief 重新布局子项

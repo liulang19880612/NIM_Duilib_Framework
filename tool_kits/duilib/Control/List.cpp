@@ -116,7 +116,7 @@ bool ListBox::SelectItem(int iIndex, bool bTakeFocus, bool bTrigger)
 	pListItem->OptionTemplate<Box>::Selected(true, bTrigger);
 
 	if (GetItemAt(m_iCurSel)) {
-		UiRect rcItem = GetItemAt(m_iCurSel)->GetPos();
+		CRect rcItem = GetItemAt(m_iCurSel)->GetPos();
 		EnsureVisible(rcItem);
 	}
 
@@ -128,12 +128,12 @@ bool ListBox::SelectItem(int iIndex, bool bTakeFocus, bool bTrigger)
 	return true;
 }
 
-void ListBox::EnsureVisible(const UiRect& rcItem)
+void ListBox::EnsureVisible(const CRect& rcItem)
 {
-	UiRect rcNewItem = rcItem;
+	CRect rcNewItem = rcItem;
 	rcNewItem.Offset(-GetScrollPos().cx, -GetScrollPos().cy);
-	UiRect rcList = GetPos();
-	UiRect rcListInset = m_pLayout->GetPadding();
+	CRect rcList = GetPos();
+	CRect rcListInset = m_pLayout->GetPadding();
 
 	rcList.left += rcListInset.left;
 	rcList.top += rcListInset.top;

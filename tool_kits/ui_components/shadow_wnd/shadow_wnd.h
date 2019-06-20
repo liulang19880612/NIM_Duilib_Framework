@@ -40,7 +40,7 @@ public:
 	ShadowWndBase();
 
 	virtual HWND Create(HWND hwndParent, LPCTSTR pstrName, DWORD dwStyle, DWORD dwExStyle, 
-		bool isLayeredWindow = false, const ui::UiRect& rc = ui::UiRect(0, 0, 0, 0)) override;
+		bool isLayeredWindow = false, const ui::CRect& rc = ui::CRect(0, 0, 0, 0)) override;
 
 private:
 	ShadowWnd* shadow_wnd_;

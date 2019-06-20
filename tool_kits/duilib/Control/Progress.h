@@ -111,7 +111,7 @@ public:
 	 * @brief 获取进度条位置
 	 * @return 返回进度条当前位置
 	 */
-	virtual UiRect GetProgressPos();
+	virtual CRect GetProgressPos();
 
 protected:
 	bool m_bHorizontal;

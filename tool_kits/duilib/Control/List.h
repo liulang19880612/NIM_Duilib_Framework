@@ -24,7 +24,7 @@ public:
 	virtual int GetCurSel() const = 0;
 	virtual bool SelectItem(int iIndex, bool bTakeFocus = false, bool bTrigger = true) = 0;
 	virtual void HandleMessageTemplate(EventArgs& event) = 0;
-	virtual void EnsureVisible(const UiRect& rcItem) = 0;
+	virtual void EnsureVisible(const CRect& rcItem) = 0;
 	virtual void StopScroll() {}
 };
 
@@ -46,7 +46,7 @@ public:
 	virtual void HandleMessageTemplate(EventArgs& event) override;
 	virtual int GetCurSel() const override;
 	virtual bool SelectItem(int iIndex, bool bTakeFocus = false, bool bTrigger = true) override;
-	virtual void EnsureVisible(const UiRect& rcItem) override;
+	virtual void EnsureVisible(const CRect& rcItem) override;
 	virtual void StopScroll() override;
 	virtual bool ButtonDown(EventArgs& msg) override;
 

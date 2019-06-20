@@ -2,7 +2,7 @@
 
 using namespace ui;
 
-ui::CSize CustomLayout::ArrangeChild(const std::vector<ui::Control*>& m_items, ui::UiRect rc)
+ui::CSize CustomLayout::ArrangeChild(const std::vector<ui::Control*>& m_items, ui::CRect rc)
 {
 	CSize size;
 	for (auto it = m_items.begin(); it != m_items.end(); it++) {
@@ -22,13 +22,13 @@ ui::CSize CustomLayout::ArrangeChild(const std::vector<ui::Control*>& m_items, u
 	return size;
 }
 
-CSize CustomLayout::SetCustomPos(Control* pControl, UiRect containerRect)
+CSize CustomLayout::SetCustomPos(Control* pControl, CRect containerRect)
 {
 	int childLeft = 0;
 	int childRight = 0;
 	int childTop = 0;
 	int childBottm = 0;
-	UiRect rcMargin = pControl->GetMargin();
+	CRect rcMargin = pControl->GetMargin();
 	int iPosLeft = containerRect.left + rcMargin.left;
 	int iPosRight = containerRect.right - rcMargin.right;
 	int iPosTop = containerRect.top + rcMargin.top;
@@ -88,7 +88,7 @@ CSize CustomLayout::SetCustomPos(Control* pControl, UiRect containerRect)
 		childBottm = childTop + childHeight;
 	}
 
-	UiRect childPos(childLeft, childTop, childRight, childBottm);
+	CRect childPos(childLeft, childTop, childRight, childBottm);
 	pControl->SetPos(childPos);
 	return CSize(childPos.GetWidth(), childPos.GetHeight());
 }

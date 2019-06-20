@@ -119,7 +119,7 @@ void BrowserBox::Invalidate()
 		taskbar_item_->InvalidateTab();
 }
 
-void BrowserBox::SetPos(UiRect rc)
+void BrowserBox::SetPos(CRect rc)
 {
 	__super::SetPos(rc);
 

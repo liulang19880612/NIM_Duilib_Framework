@@ -98,7 +98,7 @@ public:
 	*/
 	void ScaleRect(RECT &rect);
 
-	void ScaleRect(UiRect &rect);
+	void ScaleRect(CRect &rect);
 
 private:
 	DpiManager();

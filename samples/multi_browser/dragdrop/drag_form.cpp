@@ -21,7 +21,7 @@ LRESULT CALLBACK DragForm::LowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lP
 				{
 					//系统拖拽窗口。标题：Drag，类名：SysDragImage，GWL_EXSTYLE:524456
 					//WS_EX_TOPMOST--WS_EX_TRANSPARENT--WS_EX_PALETTEWINDOW--WS_EX_LAYERED--WS_EX_TOOLWINDOW
-					ui::UiRect rc(pMouseStruct->pt.x - s_point_offset.x, pMouseStruct->pt.y - s_point_offset.y, 0, 0);
+					ui::CRect rc(pMouseStruct->pt.x - s_point_offset.x, pMouseStruct->pt.y - s_point_offset.y, 0, 0);
 					s_drag_form->SetPos(rc, false, SWP_NOSIZE);
 				}
 			}
@@ -69,7 +69,7 @@ DragForm* DragForm::CreateDragForm(HBITMAP bitmap, POINT pt_offset)
 	GetObject(bitmap, sizeof(BITMAP), &bitmap_info);
 	
 	// 窗口初始化到鼠标光标的中上方位置
-	UiRect rect;
+	CRect rect;
 	rect.left = pt.x - pt_offset.x;
 	rect.top = pt.y - pt_offset.y;
 	rect.right = rect.left + bitmap_info.bmWidth;

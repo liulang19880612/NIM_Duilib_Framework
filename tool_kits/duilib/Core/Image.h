@@ -56,9 +56,9 @@ public:
 
 	std::wstring simageString;
 	std::wstring sImageName;
-	UiRect rcDest;
-	UiRect rcSource;
-	UiRect rcCorner;
+	CRect rcDest;
+	CRect rcSource;
+	CRect rcCorner;
 	BYTE bFade;
 	bool bTiledX;
 	bool bTiledY;
@@ -141,7 +141,7 @@ public:
 	std::wstring& operator[](ControlStateType stateType) { return m_stateColorMap[stateType]; }
 
 	bool HasHotColor();
-	void PaintStatusColor(IRenderContext* pRender, UiRect rcPaint, ControlStateType stateType);
+	void PaintStatusColor(IRenderContext* pRender, CRect rcPaint, ControlStateType stateType);
 
 private:
 	Control* m_pControl;
