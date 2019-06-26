@@ -70,9 +70,4 @@
       <Filter>资源文件</Filter>
     </ResourceCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="TrayIcon.impl">
-      <Filter>主窗口</Filter>
-    </None>
-  </ItemGroup>
 </Project>

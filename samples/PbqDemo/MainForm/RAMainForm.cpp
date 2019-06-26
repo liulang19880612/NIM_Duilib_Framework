@@ -53,6 +53,15 @@ LRESULT CRAMainForm::OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHan
 	PostQuitMessage(0L);
 	return __super::OnClose(uMsg, wParam, lParam, bHandled);
 }
+ui::Control* CRAMainForm::CreateControl(const std::wstring& pstrClass)
+{
+	ui::Control* pRet = nullptr;
+	if ( pstrClass.compare(L"PartitionLine")==0)
+	{
+		pRet =  new PartitionLine;
+	}
+	return pRet;
+}
 LRESULT CRAMainForm::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	LRESULT lRes = 0;

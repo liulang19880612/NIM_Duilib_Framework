@@ -15,34 +15,46 @@
 		</VBox>
       </VBox>
 	  <!--菜单区域-->
-	  <VBox width="200" height="auto"> 
-		<VBox width="auto" height="auto" bkimage="Img\\logo\\logo.png" valign="center" margin="8">
-			<HBox width="auto" height="auto"  >
-				<Label text="一级菜单" valign="center" margin="8"/>
+	  <VBox> 
+		<VBox margin="8">
+			<HBox>
+				<Label text="全部" valign="center" margin="8"/>
+				<PartitionLine />
+				<Label text="债券" valign="center" margin="8"/>
+				<PartitionLine />
+				<Label text="资金" valign="center" margin="8"/>
+				<PartitionLine />
 			</HBox>
-			<HBox width="auto" height="auto" >
+			<HBox>
 				<Label text="二级菜单" valign="center" margin="8"/>
 			</HBox>
 		</VBox>
       </VBox>
+	  
 	  <!--功能按钮-->
-	   <VBox>
+	   <VBox width="auto"  margin="4,6,0,0">
 	     <!--系统按钮-->
-		<HBox>
-			<Button class="btn_wnd_min" name="minbtn" margin="4,6,0,0"/>
+		<HBox width="auto">
+			<Button  text="去村赛" margin="4,6,0,0"/>
+			<Button  text="去村赛" margin="4,6,0,0"/>
+			<Button  text="去村赛" margin="4,6,0,0"/>
+			<Button  text="去村赛" margin="4,6,0,0"/>
+			<Button  text="去村赛" margin="4,6,0,0"/>
+			<Button  class="btn_wnd_min" name="minbtn" margin="4,6,0,0" />
 			<Box width="21" margin="4,6,0,0">
 				<Button class="btn_wnd_max" name="maxbtn"/>
 				<Button class="btn_wnd_restore" name="restorebtn" visible="false"/>
 			</Box>
-			<Button class="btn_wnd_close" name="closebtn" margin="4,6,8,0"/>
+			<Button  class="btn_wnd_close" name="closebtn" margin="4,6,8,0"/>
 		</HBox>
 		 <!--活动按钮-->
 		<HBox>
-				<Button class="btn_wnd_min" name="去村赛" margin="4,6,0,0"/>
+			<Button  text="去村赛" margin="4,6,0,0"/>
 		</HBox>
 	  </VBox>
     </HBox>
-    <Box>
+     <!--功能窗口-->
+	<Box>
       <VBox margin="0,0,0,0" valign="center" halign="center" width="auto" height="auto">
         <Label name="tooltip" text="一个简单窗口，带有标题栏和常规按钮。"/>
       </VBox>
